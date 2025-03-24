@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %} History {% endblock title %}
+{% block content %}
+<div class="overflow-x-auto " style="text-align: center;">
+<h1 style=""><b>Welcome {{request.user.username}} your previous results</b></h1>
+</div>
+<div class="overflow-x-auto ">
+  <table class="table table-zebra ">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>Text</th>
+        <th>Positive</th>
+        <th>Negative</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      {% for data in user_data %}
+  <tr>
+    <td>{{data.user_text|truncatewords:10}}</td>
+    <td>{{data.positive|floatformat:2}}</td>
+    <td>{{data.negative |floatformat:2}}</td>
+     
+   <td>{{data.result}}</td> 
+     
+  </tr>
+  {% endfor %}
+     
+    </tbody>
+  </table>
+</div>
+{% endblock %}

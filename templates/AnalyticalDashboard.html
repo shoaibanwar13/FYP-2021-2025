@@ -1,0 +1,571 @@
+{% extends 'dashboard.html' %}
+{% block title %}{{ request.user.username }} | Profile{% endblock title %}
+{% block content %} 
+{% load static %}
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    body {
+        background-color: rgb(255, 255, 255);
+    }
+    .card {
+        height: auto;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: #fff;
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+
+    }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+    .card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .metric-card {
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.metric-card h3 {
+    font-size: 2rem;
+    margin-bottom: 3px;
+}
+
+.metric-card p {
+    font-size: 1rem;
+}
+
+.metric-card:hover {
+    /* transform: scale(1.05); */
+}
+
+/* Different colors for each metric */
+.topic-popularity {
+    background-color: #007bff; /* Blue */
+}
+
+.topic-popularity:hover {
+    background-color: #0056b3;
+}
+
+.complexity-score {
+    background-color: #28a745; /* Green */
+}
+
+.complexity-score:hover {
+    background-color: #1e7e34;
+}
+
+.total-topics {
+    background-color: #ff5722; /* Orange */
+}
+
+.total-topics:hover {
+    background-color: #e64a19;
+}
+
+</style>
+
+
+<div class="container-fluid p-4" style="margin-top: 60px">
+    <h2 class="mb-4 text-black">Analytical Dashboard</h2>
+    <!-- Metrics Section -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4 mb-4">
+            <div class="metric-card topic-popularity">
+                <h3 id="topic-popularity">0%</h3>  <!-- ID added -->
+                <p>Topic Popularity</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="metric-card complexity-score">
+                <h3 id="complexity-score">0%</h3>  <!-- ID added -->
+                <p>Complexity Score</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="metric-card total-topics">
+                <h3 id="total-topics">0</h3>  <!-- ID added -->
+                <p>Total Topics Analyzed</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Row 1: Overview Charts -->
+    <div class="row g-0">
+        <div  >
+            
+                <p>All Unique Tags</p>
+            </div>
+            <div >
+                {% if data_page %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border border-gray-300 px-4 py-2 text-left">Tags</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left"> Tags</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left"> Tags</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left"> Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data_page %}
+                        <tr>
+                            {% for value in row.values %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        
+                <!-- Pagination Controls -->
+                <nav>
+                    <ul class="pagination">
+                        {% if data_page.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ data_page.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+        
+                        <li class="page-item active">
+                            <span class="page-link">{{ data_page.number }} of {{ data_page.paginator.num_pages }}</span>
+                        </li>
+        
+                        {% if data_page.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ data_page.next_page_number }}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ data_page.paginator.num_pages }}">Last</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+        <div  >
+            <div  >
+                {{ significance_chart|safe }}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Row 2: Detailed Insights -->
+    <div class="row g-0">
+        <div  >
+            <div >
+               {{relevance_chart|safe}}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class= >
+                <div >
+                    <div  >     
+                        {{unique_post_chart|safe}}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card p-3">
+                         
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 3: Additional Analysis -->
+    <div class="row g-0">
+        <div >
+            <div >
+                <div class="w-full max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-4">Topics List</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow">
+                            <thead>
+                                <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6 text-left">Topic Number</th>
+                                    <th class="py-3 px-6 text-left">Words</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
+                                {% for topic in page_obj %}
+                                    <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
+                                        <td class="py-3 px-6">{{ topic.0 }}</td>
+                                        <td class="py-3 px-6">{{ topic.1 }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+            
+                    <!-- Pagination -->
+                    <div class="flex justify-between items-center mt-4">
+                        <div>
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1" class="text-blue-500 hover:underline px-2">First</a>
+                                <a href="?page={{ page_obj.previous_page_number }}" class="text-blue-500 hover:underline px-2">Previous</a>
+                            {% endif %}
+                        </div>
+            
+                        <span class="text-gray-700">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            
+                        <div>
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="text-blue-500 hover:underline px-2">Next</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}" class="text-blue-500 hover:underline px-2">Last</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div >
+            <div  >
+                 {{papularity_chart|safe}}
+            </div>
+        </div>
+    </div>
+
+      <!-- Row 3: Detailed Insights -->
+      <div >
+         
+            <div class="container mx-auto px-4 py-6">
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Generated Topic</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Popularity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in page_obj_for_papularity %}
+                            <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
+                                <td class="py-3 px-6">{{ row.Topic }}</td>
+                                <td class="py-3 px-6">{{ row.Popularity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            
+                <div class="flex justify-center mt-4">
+                    <nav class="flex space-x-2">
+                        {% if page_obj_for_papularity.has_previous %}
+                            <a href="?page=1" class="px-3 py-2 bg-gray-300 rounded-md">First</a>
+                            <a href="?page={{ page_obj_for_papularity.previous_page_number }}" class="px-3 py-2 bg-gray-300 rounded-md">Previous</a>
+                        {% endif %}
+                
+                        <span class="px-3 py-2 bg-blue-500 text-white rounded-md">
+                            Page {{ page_obj_for_papularity.number }} of {{ page_obj_for_papularity.paginator.num_pages }}
+                        </span>
+                
+                        {% if page_obj_for_papularity.has_next %}
+                            <a href="?page={{ page_obj_for_papularity.next_page_number }}" class="px-3 py-2 bg-gray-300 rounded-md">Next</a>
+                            <a href="?page={{ page_obj_for_papularity.paginator.num_pages }}" class="px-3 py-2 bg-gray-300 rounded-md">Last</a>
+                        {% endif %}
+                    </nav>
+                </div>
+        </div>
+        {% comment %} <div class="col-md-9">
+            <div class="card">
+                <img src="{% static 'charts/absoluteimpact.png' %}" alt="absoluteimpact">
+            </div>
+        </div>
+    </div> {% endcomment %}
+ 
+    <!-- Row 4: Heatmaps & Trends -->
+    <div  >
+        <div  >
+            <div  >
+              
+                <div class="container mx-auto px-4 py-6">
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="border border-gray-300 px-4 py-2 text-left">Generated Topic</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left">Total Questions</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left">Unanswered Questions</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left">% Q Without Accepted Answer</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left">Median Hrs to Accepted Answer</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left">Fused Difficulty</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in page_obj_for_difficulty %}
+                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
+                                    <td class="py-3 px-6">{{ row.GeneratedTopic }}</td>
+                                    <td class="py-3 px-6">{{ row.TotalQuestions }}</td>
+                                    <td class="py-3 px-6">{{ row.UnansweredQuestions }}</td>
+                                    <td class="py-3 px-6">{{ row.PctQWoAcceptedAnswerNorm }}</td>
+                                    <td class="py-3 px-6">{{ row.MedHrsToGetAccAnsNorm }}</td>
+                                    <td class="py-3 px-6">{{ row.FusedDifficulty }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                
+                    <!-- Pagination Controls -->
+                    <div class="flex justify-center mt-4">
+                        <nav class="flex space-x-2">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1" class="px-3 py-2 bg-gray-300 rounded-md">First</a>
+                                <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 bg-gray-300 rounded-md">Previous</a>
+                            {% endif %}
+                
+                            <span class="px-3 py-2 bg-blue-500 text-white rounded-md">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span>
+                
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 bg-gray-300 rounded-md">Next</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}" class="px-3 py-2 bg-gray-300 rounded-md">Last</a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+           <div  >
+            <div  >
+                <div  >
+                   {{difficulty_of_topics|safe}}
+                </div>
+            </div>
+            <div >
+                <div  >
+                     {{topic_trends_chart_html|safe}}
+                </div>
+            </div>
+           </div>
+         
+        </div>
+        
+    </div>
+    <!-- Row 3: Additional Analysis -->
+ <div class="row g-0">
+    <div class="col-md-10">
+        <div class="card">
+            {{question_persentage_chart|safe}}
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            
+        </div>
+    </div>
+</div> 
+    <!-- Row 5: Additional Data Representations -->
+    <div  >
+        <div  >
+            <div  >
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">Topic Data</h2>
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="border border-gray-300 px-4 py-2">Generated Topic</th>
+                    <th class="border border-gray-300 px-4 py-2">How</th>
+                    <th class="border border-gray-300 px-4 py-2">Others</th>
+                    <th class="border border-gray-300 px-4 py-2">What</th>
+                    <th class="border border-gray-300 px-4 py-2">Why</th>
+                    <th class="border border-gray-300 px-4 py-2">How %</th>
+                    <th class="border border-gray-300 px-4 py-2">Others %</th>
+                    <th class="border border-gray-300 px-4 py-2">What %</th>
+                    <th class="border border-gray-300 px-4 py-2">Why %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in page_obj_for_questions %}
+                            <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
+                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
+                                    <td class="py-3 px-6">{{ row.GeneratedTopic }}</td>
+                                    <td class="py-3 px-6">{{ row.How }}</td>
+                                    <td class="py-3 px-6">{{ row.Others }}</td>
+                                    <td class="py-3 px-6">{{ row.What }}</td>
+                                    <td class="py-3 px-6">{{ row.Why }}</td>
+                                    <td class="py-3 px-6">{{ row.How_Percentage }}</td>
+                                    <td class="py-3 px-6">{{ row.Others_Percentage }}</td>
+                                    <td class="py-3 px-6">{{ row.What_Percentage }}</td>
+                                    <td class="py-3 px-6">{{ row.Why_Percentage }}</td>
+                                </tr>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            
+                    <!-- Pagination Controls -->
+                    <div class="flex justify-center mt-4">
+                        <nav class="flex space-x-2">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1" class="px-3 py-2 bg-gray-300 rounded-md">First</a>
+                                <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 bg-gray-300 rounded-md">Previous</a>
+                            {% endif %}
+            
+                            <span class="px-3 py-2 bg-blue-500 text-white rounded-md">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span>
+            
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 bg-gray-300 rounded-md">Next</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}" class="px-3 py-2 bg-gray-300 rounded-md">Last</a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <img src="{% static 'charts/bubblechart2.png' %}" alt="Bubble Chart">
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 6: Comprehensive Overview -->
+    <div class="row g-0">
+        <div class="col-md-12">
+            <div class="card">
+                <img src="{% static 'charts/relunique.png' %}" alt="Overview Chart">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <img src="{% static 'charts/relunique.png' %}" alt="Overview Chart">
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 7: Line Charts -->
+     <div class="row">
+        <div class="col-md-4">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card">
+                        <img src="{% static 'charts/Barchart.png' %}" alt="Bar Chart">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <img src="{% static 'charts/questions.png' %}" alt="Stacked Bar">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+              
+                <img src="{% static 'charts/newplot.png' %}" alt="New Analysis">
+            </div>
+        </div>
+     </div>
+    
+    <!-- Row 8: Final Comparative Charts -->
+    <div class="row g-0">
+        <div class="col-md-6">
+            <div class="card">
+                <img src="{% static 'charts/tags.png' %}" alt="Volatility Chart">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <img src="{% static 'charts/relativechange.png' %}" alt="Relative Change">
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('curveChart').getContext('2d');
+        var curveChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Trend Analysis',
+                    data: [10, 20, 15, 30, 25, 40, 35],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        const ctxDonut = document.getElementById('halfDonutChart').getContext('2d');
+    new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: {
+            // labels: ['Completed', 'Remaining'],
+            datasets: [{
+                data: [75, 25],
+                backgroundColor: ['#28a745', '#ddd'],
+                hoverBackgroundColor: ['#218838', '#bbb']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            rotation: -90,
+            circumference: 180,
+            cutout: '50%',
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+    function animateValue(id, start, end, duration) {
+        let element = document.getElementById(id);
+        let range = end - start;
+        let current = start;
+        let increment = end > start ? 1 : -1;
+        let stepTime = Math.abs(Math.floor(duration / range));
+
+        let timer = setInterval(function () {
+            current += increment;
+            element.textContent = current + "%";
+            if (current == end) {
+                clearInterval(timer);
+            }
+        }, stepTime);
+    }
+
+    // Call the function for different metric values
+    document.addEventListener("DOMContentLoaded", function () {
+        animateValue("topic-popularity", 0, 85, 1000);  
+        animateValue("complexity-score", 0, 65, 1000);   
+        animateValue("total-topics", 0, 120, 1500);      
+    });
+    </script>
+</div>
+
+{% endblock %}

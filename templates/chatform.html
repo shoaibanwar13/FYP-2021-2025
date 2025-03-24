@@ -1,0 +1,190 @@
+
+    <style>
+        body {
+            background-color: #343541;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background: #202123;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+        }
+        .sidebar.hidden {
+            display: none;
+        }
+        .toggle-btn {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            background: #565869;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .sidebar h2 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .history {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .history-item {
+            color: white;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #444654;
+        }
+        .history-item:hover {
+            background: #565869;
+        }
+        .chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: #444654;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transition: margin-left 0.3s ease-in-out;
+            width: calc(100% - 250px);
+        }
+        .chat-container.full-width {
+            width: 100%;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            max-width: 75%;
+        }
+        .user-message {
+            background-color: #0b93f6;
+            color: white;
+            align-self: flex-end;
+        }
+        .ai-message {
+            background-color: #40414f;
+            color: white;
+            align-self: flex-start;
+        }
+        .input-container {
+            display: flex;
+            padding: 15px;
+            background: #343541;
+            border-top: 1px solid #565869;
+        }
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: #40414f;
+            color: white;
+        }
+        .input-container button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border: none;
+            background: #0b93f6;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .input-container button:hover {
+            background: #0078d4;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .chat-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        {% comment %} <h2>ChatGPT</h2> {% endcomment %}
+        <div class="history" id="chatHistory"></div>
+    </div>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-box" id="chatBox">
+            <div class="chat-message ai-message">Hello! How can I assist you today?</div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Send a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">&#9658;</button>
+        </div>
+    </div>
+    <script>
+        function toggleSidebar() {
+            let sidebar = document.getElementById("sidebar");
+            let chatContainer = document.getElementById("chatContainer");
+            if (sidebar.classList.contains("hidden")) {
+                sidebar.classList.remove("hidden");
+                chatContainer.classList.remove("full-width");
+            } else {
+                sidebar.classList.add("hidden");
+                chatContainer.classList.add("full-width");
+            }
+        }
+        
+        function sendMessage() {
+            let inputField = document.getElementById("userInput");
+            let chatBox = document.getElementById("chatBox");
+            let chatHistory = document.getElementById("chatHistory");
+            let message = inputField.value.trim();
+            if (message !== "") {
+                let userMessage = document.createElement("div");
+                userMessage.className = "chat-message user-message";
+                userMessage.textContent = message;
+                chatBox.appendChild(userMessage);
+                
+                let historyItem = document.createElement("div");
+                historyItem.className = "history-item";
+                historyItem.textContent = message;
+                chatHistory.appendChild(historyItem);
+                
+                inputField.value = "";
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                setTimeout(() => {
+                    let aiMessage = document.createElement("div");
+                    aiMessage.className = "chat-message ai-message";
+                    aiMessage.textContent = "This is a sample AI response.";
+                    chatBox.appendChild(aiMessage);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+

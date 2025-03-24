@@ -1,0 +1,562 @@
+{% extends 'base.html'%}
+{%block content%}
+<style>
+    .buttoncontainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .container1{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      align-items: center;
+    }
+    .custom-button1 {
+        display: inline-block;
+        background-color: blue;
+        color: white; 
+        padding: 8px 35px; 
+        border-radius: 18px; 
+        font-size: 15px;
+        font-weight: 600; 
+        text-decoration: none; 
+        transition: all 0.3s ease-in-out; 
+        
+    }
+    
+    .custom-button1:hover {
+        background-color:white; 
+        color: black;
+        transform: scale(1.05); 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    } 
+    .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .nav-link {
+            color: black;
+            font-weight: 300;
+        }
+        .nav-link.active {
+            color: blue;
+            border-bottom: 2px solid blue;
+        }
+    
+     
+</style>
+{% comment %} {% include 'components/pricing.html' %} {% endcomment %}
+<div class="bg-gray-900" id="purchase"  style="background-color:white; margin-top:100px;">
+    <div class="mx-auto pb-10 mt-4 max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <h1 class="text-base font-semibold leading-7 " style="color:#303fe1;" >Pricing</h1>
+        <p class="mt-2 text-4xl font-bold tracking-tight text-black sm:text-5xl">Flexible  pricing options, pay for What You Use and Scale Up your work needs</p>
+      </div>
+      <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-black-300">Choose the Plan That Works Best for Your Budget</p>
+      <div class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <!-- First Product -->
+        {%for plan in plan%}
+        <div class="ring-1 ring-white/10 rounded-3xl p-8 xl:p-10" style="border: 1px solid black" id="box-animation">
+            
+          <div class="flex items-center justify-between gap-x-4">
+            <h2 id="product1" class="text-lg font-semibold leading-8 text-black" >{{plan.name}} / {{plan.duration}}days</h2>
+          </div>
+          <p class="mt-4 text-sm leading-6 text-black-300 " >{{plan.plan_description}}</p>
+         
+          <div class="buttoncontainer">
+            <p class="mt-6 flex items-baseline gap-x-1">
+                <span class="text-4xl font-semibold tracking-tight text-black">${{plan.plan_pricing}}</span><span class="text-sm leading-6 text-black-300">USD</span>
+              </p>
+        <a href="{% url 'plan_detail' plan.id %}" aria-describedby="product1"
+        class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Purchase
+        Now</a>
+          </div>
+          <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-black-300 xl:mt-10">
+            <li class="flex gap-x-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true" class="h-6 w-5 flex-none text-dark">
+                <path fill-rule="evenodd"
+                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                  clip-rule="evenodd"></path>
+              </svg>save {{plan.discount}}</li>
+            <li class="flex gap-x-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true" class="h-6 w-5 flex-none text-dark">
+                <path fill-rule="evenodd"
+                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                  clip-rule="evenodd"></path>
+              </svg>{{plan.benefit1}}</li>
+            <li class="flex gap-x-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true" class="h-6 w-5 flex-none text-dark">
+                <path fill-rule="evenodd"
+                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                  clip-rule="evenodd"></path>
+              </svg>{{plan.benefit2}}</li>
+          </ul>
+        </div>
+        {% endfor %}
+  
+      
+      </div>
+      <div class="container1 mt-5 mb-5">
+        <a href="#compare-section" aria-describedby="product1"
+        class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 py-2"  >Campare Plan features</a>
+       </div>
+       <div class="container text-center mt-5">
+        <h2 class="mb-4" style="font-size: 32px; font-weight: 600;">Everything you need to succeed</h2>
+        <ul class="nav justify-content-center" style="margin-top: 20px;">
+            <li class="nav-item"><a class="nav-link active" data-tab="confidence">Confidence</a></li>
+            <li class="nav-item"><a class="nav-link" data-tab="efficiency">Efficiency</a></li>
+            <li class="nav-item"><a class="nav-link" data-tab="creativity">Creativity</a></li>
+            <li class="nav-item"><a class="nav-link" data-tab="Size">Size</a></li>
+            <li class="nav-item"><a class="nav-link" data-tab="integrity">Integrity</a></li>
+            <li class="nav-item"><a class="nav-link" data-tab="Inspiration">Inspiration</a></li>
+        </ul>
+        <div style="margin-top: 50px; margin-left: 20px; margin-right: 20px;">
+            <div id="confidence" class="tab-content active" >
+                <div class="card mb-3 d-flex justify-content-center">
+                    <div class="row g-0">
+                      <div class="col-md-8 text-start">
+                        <div class="card-body">
+                          <h5 class="card-title mb-4" style="font-size: 32px;">Boost your <span style="color:blue">Confidence</span> on your Businees</h5>
+                          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, minus officia labore doloremque nobis non in nulla recusandae distinctio sit placeat adipisci mollitia esse, hic dolorem? Officia facere consectetur doloribus saepe explicabo, minima iste sunt nulla exercitationem odit nostrum. Quisquam culpa quam amet atque qui esse assumenda! Error consectetur sed et eius. Iure blanditiis nisi nemo reiciendis minima veniam debitis!</p>
+                          <a href="#purchase" aria-describedby="product1"
+                          class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Upgrade Now</a>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <img src="https://i.sstatic.net/i6NG3.gif"
+                        class="img-fluid rounded-start" alt="...">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div id="efficiency" class="tab-content">
+                <div class="card mb-3 d-flex justify-content-center">
+                    <div class="row g-0">
+                      <div class="col-md-8 text-start">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4" style="font-size: 32px;">Transform your <span style="color:blue">UNLIMITED</span> Text</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, minus officia labore doloremque nobis non in nulla recusandae distinctio sit placeat adipisci mollitia esse, hic dolorem? Officia facere consectetur doloribus saepe explicabo, minima iste sunt nulla exercitationem odit nostrum. Quisquam culpa quam amet atque qui esse assumenda! Error consectetur sed et eius. Iure blanditiis nisi nemo reiciendis minima veniam debitis!</p>
+                            <a href="#purchase" aria-describedby="product1"
+                            class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Upgrade Now</a>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <img src="https://cdn.dribbble.com/userupload/3898108/file/still-2922cb3ec3706c1517028eefd9feecce.gif?resize=400x0" class="img-fluid rounded-start" alt="...">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div id="creativity" class="tab-content">
+                <div class="card mb-3 d-flex justify-content-center">
+                    <div class="row g-0">
+                      <div class="col-md-8 text-start">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4" style="font-size: 32px;">Enhance your <span style="color:blue;">Creativity</span></h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, minus officia labore doloremque nobis non in nulla recusandae distinctio sit placeat adipisci mollitia esse, hic dolorem? Officia facere consectetur doloribus saepe explicabo, minima iste sunt nulla exercitationem odit nostrum. Quisquam culpa quam amet atque qui esse assumenda! Error consectetur sed et eius. Iure blanditiis nisi nemo reiciendis minima veniam debitis!</p>
+                            <a href="#purchase" aria-describedby="product1"
+                            class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Upgrade Now</a>
+                          </div>
+
+                      </div>
+                      <div class="col-md-4">
+                        <img src="https://cdn.svgator.com/assets/landing-pages/web-animation/free-web-animation-editor.png" alt="...">
+                      </div>
+                   
+                    </div>
+                  </div>
+            </div>
+            <div id="integrity" class="tab-content">
+                <div class="card mb-3 d-flex justify-content-center"> 
+                    <div class="row g-0">
+                      <div class="col-md-8 text-start">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4" style="font-size: 32px;">Get more <span style="color:blue;">Optimised</span> Results</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, minus officia labore doloremque nobis non in nulla recusandae distinctio sit placeat adipisci mollitia esse, hic dolorem? Officia facere consectetur doloribus saepe explicabo, minima iste sunt nulla exercitationem odit nostrum. Quisquam culpa quam amet atque qui esse assumenda! Error consectetur sed et eius. Iure blanditiis nisi nemo reiciendis minima veniam debitis!</p>
+                            <a href="#purchase" aria-describedby="product1"
+                            class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Upgrade Now</a>
+                          </div>
+                      </div>
+                      <div class="col-md-4 mt-5">
+                        <img src="https://d33v4339jhl8k0.cloudfront.net/docs/assets/55192029e4b0221aadf23f55/images/5b106ef92c7d3a0fa9a27c40/file-geTC4PcnhJ.gif" class="img-fluid rounded-start" alt="...">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div id="Size" class="tab-content">
+                <div class="card mb-3 d-flex justify-content-center">
+                    <div class="row g-0">
+                      <div class="col-md-8 text-start">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4" style="font-size: 32px;">Upload Files of <span style="color:blue"> Greater </span>sizes</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, minus officia labore doloremque nobis non in nulla recusandae distinctio sit placeat adipisci mollitia esse, hic dolorem? Officia facere consectetur doloribus saepe explicabo, minima iste sunt nulla exercitationem odit nostrum. Quisquam culpa quam amet atque qui esse assumenda! Error consectetur sed et eius. Iure blanditiis nisi nemo reiciendis minima veniam debitis!</p>
+                            <a href="#purchase" aria-describedby="product1"
+                            class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Upgrade Now</a>
+                          </div>
+                      </div>
+                      <div class="col-md-4 mt-5">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT6PA0JWKyJY0yJO1q_vZMGhhLe-SgSIGtFw&s" alt="...">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div id="Inspiration" class="tab-content">
+                <div class="card mb-3 d-flex justify-content-center">
+                    <div class="row g-0">
+                      <div class="col-md-8 text-start">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 32px;">Make <span style="color:blue;">Decision Making </span> more easier</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, minus officia labore doloremque nobis non in nulla recusandae distinctio sit placeat adipisci mollitia esse, hic dolorem? Officia facere consectetur doloribus saepe explicabo, minima iste sunt nulla exercitationem odit nostrum. Quisquam culpa quam amet atque qui esse assumenda! Error consectetur sed et eius. Iure blanditiis nisi nemo reiciendis minima veniam debitis!</p>
+                            <a href="#purchase" aria-describedby="product1"
+                            class="buttoncontainer custom-button1 bg-white/10 hover:bg-white/20 focus-visible:outline-white mt-6 block rounded-md  text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"  >Upgrade Now</a>
+                          </div>
+                      </div>
+                      <div class="col-md-4 mt-5">
+                        <img src="https://visme.co/blog/wp-content/uploads/2016/04/Header-5.gif" alt="...">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+    </div>
+  
+    </div>
+    
+  </div>
+ 
+  <section id="compare-section">
+    <h2 class="text-center" style="font-size: 35px; font-weight: 500; margin-bottom:50px;"><span style="color:rgb(45, 45, 125);">Explore InTextify Premium</span></h2>
+    <div class="container-fluid" style="background-color: white; ">
+      <div class="pricing-table-wrapper mb-3" style="background-color: white ; color:black; border:1px solid rgb(187, 186, 186) ; " >
+        <div class="highlighted-pricing-table-row" style="background-color: white "></div>
+        <div class="pricing-table-header" style="background-color: white; border:1px solid black; border-radius: 12px;">
+          <div class="toggle-wrapper table" style="background-color: white ;">
+            <!-- <div data-w-id="69eb9a28-8f66-1d04-3554-19df36e955c8" class="toggle-bg table">
+              <div class="toggle-btn table"></div>
+              
+              <div class="toggle-text annually" >Monthly</div>
+              <div class="toggle-text monthly">Annually</div>
+            </div> -->
+          </div>
+    <div class="pricing-table-header-cols w-row" style="color:black; background-color:white ;">
+            <div class="pricing-table-cols w-col w-col-4 w-col-small-4 w-col-tiny-4" >
+                <div class="pricing-card-header table"style="color:black; background-color: white ;">
+                    <div class="pricing-title table">Weekly</div>
+                    <div class="pricing-table-price-block custom-pricing">
+                      <div class="pricing-small-text v2 custom-pricing">
+                        
+                        <div class="pricing-table-price-block">
+                          <div class="pricing-card-price-block table">
+                            <div class="pricing-currency v2">$</div>
+                            <div class="pricing-price v2 text-black">30.00</div>
+                          </div>
+                          <div class="pricing-small-text v2 annually">Basic Level</div>
+                          
+                        </div>
+                       
+                      </div>
+                    </div>
+                    <p class="pricing-table-text">A custom-made plan, tailored to your Medical Industery,And Specially Design For Big Hospital,Clinic and Dentist </p>
+                  </div>
+            </div>
+            <div class="pricing-table-cols w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-card-header table" style="color:black; background-color: white ">
+                    <div class="pricing-title table">Monthly</div>
+                    <div class="pricing-table-price-block custom-pricing">
+                      <div class="pricing-small-text v2 custom-pricing">
+                        
+                        <div class="pricing-table-price-block">
+                          <div class="pricing-card-price-block table">
+                            <div class="pricing-currency v2">$</div>
+                            <div class="pricing-price v2 text-black">50.00</div>
+                          </div>
+                          <div class="pricing-small-text v2 annually">Enterprise Level</div>
+                      
+                        </div>
+                       
+                      </div>
+                    </div>
+                    <p class="pricing-table-text">A custom-made plan, tailored to your Medical Industery,And Specially Design For Big Hospital,Clinic and Dentist </p>
+                  </div>
+            </div>
+            <div class="pricing-table-cols w-col w-col-4 w-col-small-4 w-col-tiny-4">
+              <div class="pricing-card-header table" style="color:black; background-color:white;">
+                <div class="pricing-title table">Annually</div>
+                <div class="pricing-table-price-block custom-pricing">
+                  <div class="pricing-small-text v2 custom-pricing">
+                    
+                    <div class="pricing-table-price-block">
+                      <div class="pricing-card-price-block table">
+                        <div class="pricing-currency v2">$</div>
+                        <div class="pricing-price v2 text-black">70.00</div>
+                      </div>
+                      <div class="pricing-small-text v2 annually">Pro Level</div>
+                      
+                    </div>
+                   
+                  </div>
+                </div>
+                <p class="pricing-table-text">A custom-made plan, tailored to your Medical Industery,And Specially Design For Big Hospital,Clinic and Dentist </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pricing-table-category">
+          <div class="pricing-table-category-title">
+            <div class="pricing-table-section-title text-black">Services</div>
+          </div>
+          <div class="pricing-table-row">
+            <div class="pricing-table-row-title">
+              <div class="pricing-card-row mobile-center">
+                <div class="pricing-row-text title text-black">Service Portion</div>
+              </div>
+            </div>
+            <div class="pricing-table-row-cols w-row" >
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-row-text text-black">4</div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-row-text text-black">4</div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-row-text text-black">6</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+        </div>
+        <hr>
+        <div class="pricing-table-category">
+          <div class="pricing-table-category-title">
+            <div class="pricing-table-section-title text-black">Features</div>
+          </div>
+          <div class="pricing-table-row">
+            <div class="pricing-table-row-title">
+              <div class="pricing-card-row mobile-center">
+                <div class="pricing-row-text title text-black">Feature Metrix</div>
+              </div>
+            </div>
+            <div class="pricing-table-row-cols w-row">
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-row-text text-black">3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-row-text text-black">4</div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-row-text text-black">3</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="pricing-table-category">
+          <div class="pricing-table-category-title">
+            <div class="pricing-table-section-title text-black">Projects</div>
+          </div>
+          <div class="pricing-table-row">
+            <div class="pricing-table-row-title">
+              <div class="pricing-card-row mobile-center">
+                <div class="pricing-row-text title text-black">Projects Card</div>
+              </div>
+            </div>
+            <div class="pricing-table-row-cols w-row">
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4" >
+                <div class="pricing-table-content" >
+                  <div class="pricing-card-row center text-black" >
+                    <div >4</div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4" >
+                <div class="pricing-table-content" >
+                  <div class="pricing-card-row center">
+                    <div  >3</div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content" >
+                  <div class="pricing-card-row center">
+                    <div  >12</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pricing-table-row">
+            <div class="pricing-table-row-title">
+              <div class="pricing-card-row mobile-center">
+                <div class="pricing-row-text title text-black">User-Friendly</div>
+              </div>
+            </div>
+            <div class="pricing-table-row-cols w-row">
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+   
+          </div>
+        
+        </div>
+        <hr>
+        <div class="pricing-table-category">
+          <div class="pricing-table-category-title">
+            <div class="pricing-table-section-title text-black">Support</div>
+          </div>
+          <div class="pricing-table-row">
+            <div class="pricing-table-row-title">
+              <div class="pricing-card-row mobile-center">
+                <div class="pricing-row-text title text-black">Priority support</div>
+              </div>
+            </div>
+            <div class="pricing-table-row-cols w-row">
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pricing-table-row">
+            <div class="pricing-table-row-title">
+              <div class="pricing-card-row mobile-center last">
+                <div class="pricing-row-text title text-black">Developer Support</div>
+              </div>
+            </div>
+            <div class="pricing-table-row-cols w-row">
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row last center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row last center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-table-content">
+                  <div class="pricing-card-row last center">
+                    <div class="pricing-icon table"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-table-footer">
+          <div class="footer-empty-cell"></div>
+          <div class="pricing-table-header-cols w-row">
+            <div class="pricing-table-cols w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-card-btn-container table"><a href="" hx-get="#" hx-push-url="#" hx-target="#change"
+                    class="filled-btn pricing-table w-button " style="margin-left: 10px;"  >Get Premium</a></div>
+              </div>
+            <div class="pricing-table-cols w-col w-col-4 w-col-small-4 w-col-tiny-4">
+              <div class="pricing-card-btn-container table"><a href="" hx-get="#" hx-push-url="#" hx-target="#change"
+                  class="filled-btn pricing-table w-button " style="margin-left: 10px;"  >Get Premium</a></div>
+            </div>
+            <div class="pricing-table-cols w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                <div class="pricing-card-btn-container table"><a href="" hx-get="#" hx-push-url="#" hx-target="#change"
+                    class="filled-btn pricing-table w-button " style="margin-left: 10px;"  >Get Premium</a></div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    let tabs = document.querySelectorAll('.nav-link');
+    let contents = document.querySelectorAll('.tab-content');
+    let currentIndex = 0;
+
+    function changeTab(index) {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+
+        tabs[index].classList.add('active');
+        contents[index].classList.add('active');
+    }
+
+    // Event listener for manual click
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', function() {
+            changeTab(index);
+            currentIndex = index; // Update index if user clicks
+        });
+    });
+
+    // Auto change tabs every 5 seconds
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % tabs.length;
+        changeTab(currentIndex);
+    }, 3000);
+</script>
+
+{%endblock%}

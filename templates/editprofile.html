@@ -1,0 +1,108 @@
+{% extends 'dashboard.html'%}
+{% block title %}{{request.user.username}} | profile{% endblock title %}
+{% block content %} 
+{% load static %}
+<style>
+  .card{
+    background: rgb(195 197 199) ;
+  }
+</style>
+<body class="bg-light">
+    <div class="container" style="margin-top: 100px;">
+        <h2 class="">Edit Profile</h2>
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-4" style="margin-top: 20px;">
+                <div class="card p-4 text-center">
+                    <img src="{{user.profile.profilepic.url}}" class="rounded-circle mx-auto mb-3" width="100" height="100" alt="Profile Image">
+                    <div class="settings-profile-name-info">
+                      <h2 class="settings-profile-name">{{request.user.username}}</h2><div class="settings-profile-info">{{user.profile.profession}}</div>
+                    </div>
+                     {% if userbalace %}       
+                  <div class="settings-profile-buttons-wrapper">
+                    <a href="#" class="upload-new-button w-button"> Balance ${{user.profile.balance}}</a>
+            <a href="#" class="delete-avatar-button w-button"> Withdrawls ${{user.profile.withdrawl_amount}}</a>
+                  </div>
+                  {% endif %}
+                  <p class="settings-paragraph-text">{{user.profile.bio}}</p>
+                    <div class="settings-socal-icons-wrapper">
+                      <a href="{{user.profile.facebook}}" target="_blank" class="settings-socal-icon-link-block w-inline-block"><div></div></a><a href="{{user.profile.skpye}}" target="_blank" class="settings-socal-icon-link-block w-inline-block"><div></div></a><a href="{{user.profile.twitter}}" target="_blank" class="settings-socal-icon-link-block w-inline-block"><div></div></a><a href="{{user.profile.linkedin}}" target="_blank" class="settings-socal-icon-link-block mr0 w-inline-block"><div></div></a>
+                    </div>
+                    
+                </div>
+                
+                <div class="card p-4 mt-3 text-center">
+                    <img src="{% static 'charts/scan.jpeg' %}" class="mx-auto mb-3" width="100" height="100" alt="QR Code">
+                    <a href="#" class="text-success">NFC/QR Code</a>
+                    <p class="text-muted">QR code image should be printed and attached to the company entry.</p>
+                </div>
+                
+                <div class="card p-4 mt-3">
+                    <h5>API Key</h5>
+                    <textarea class="form-control mb-2" readonly>rOm6xwi4frNgpHu13k5EkqjiONUHErt2dzwyMHBXv91du84Jey5enMbf6n5ASlQ0</textarea>
+                    <button class="btn btn-success btn-sm">Generate API Key</button>
+                    <a href="#" class="d-block mt-2 text-success">Read our API Docs</a>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="card p-4">
+                    <div class="settings-tab-menu w-tab-menu">
+                      <a data-w-tab="Tab 1" class="settings-tab-link w-inline-block w-tab-link w--current"><div>Profile</div></a>
+                    </div>
+                        <div class="settings-tabs-content w-tab-content">
+                            <div data-w-tab="Tab 1" class="settings-tab-pane w-tab-pane w--tab-active">
+                              <div class="settings-content-wrapper">
+                                <div class="settings-form-wrapper">
+                                <div class="settings-form-block w-form">
+                                  <!-- {% load django_bootstrap5 %} -->
+            <!-- {# Display a form #}
+             
+            
+            {# Load CSS and JavaScript #}
+            {% bootstrap_css %}
+            <style>
+                /* Custom CSS to change body color to black */
+                body {
+                    background-color:#221e34;
+                    color: white; /* Change text color to white for better contrast */
+                }
+                input{
+                    background-color: #221e34;
+                }
+            </style> -->
+            <!-- {% bootstrap_javascript %}
+            
+            {# Display django.contrib.messages as Bootstrap alerts #}
+            {% bootstrap_messages %}
+            
+            {# Display a form #} -->
+            <form action="{% url 'edit_profile' %}" method="post" class="form" enctype="multipart/form-data" >
+              {% csrf_token %}
+            
+              {% bootstrap_form u_form  %}
+              {% bootstrap_form p_form  %}
+            
+              <input type="submit" value="Update Profile"  class="settings-button w-button" id="showSpinnerButton">
+              <!-- <div class="settings-form-singel-wrappper">                               
+                <div  >
+                  <a href="/auth/edit_profile" class="settings-button w-button">Update Profile</a>
+                </div>
+              </div> -->
+             
+                                    </form>
+                                     
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                              </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+ {% endblock %}

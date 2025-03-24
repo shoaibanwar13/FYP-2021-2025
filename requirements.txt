@@ -1,0 +1,13 @@
+﻿Django
+requests
+stripe
+apscheduler
+json5
+django-jazzmin
+social-auth-app-django
+django-htmx
+django-crispy-forms
+crispy-bootstrap5
+django-bootstrap5
+cloudinary
+django-cloudinary-storage

@@ -1,0 +1,41 @@
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore Virtual Environment
+venv/
+env/
+*.egg-info/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignore Database & Migrations
+db.sqlite3
+*.sqlite3
+*.db
+migrations/
+
+# Ignore Media and Static files
+/media/
+staticfiles/
+*.log
+
+# Ignore IDE / Editor Configurations
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore environment variables and secrets
+.env
+.env.local
+.env.production
+.env.development
+
+# Ignore MacOS system files
+.DS_Store
+
+# Ignore JetBrains project files
+*.iml
+/.idea/

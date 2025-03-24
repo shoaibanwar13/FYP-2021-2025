@@ -1,0 +1,218 @@
+{% extends 'dashboard.html'%}
+{% block title %}{{request.user.username}} | profile{% endblock title %}
+{% block content %} 
+{% load static %}
+<style>
+  .card {
+    background:rgb(195 197 199)  /* Light Grey */
+}
+</style>
+<body class="bg-light">
+    <div class="container" style="margin-top: 100px;">
+        <h2 class="">Profile</h2>
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-4" style="margin-top: 20px;">
+                <div class="card p-4 text-center">
+                    <img src="{{user.profile.profilepic.url}}" class="rounded-circle mx-auto mb-3" width="100" height="100" alt="Profile Image">
+                    <div class="settings-profile-name-info">
+                      <h2 class="settings-profile-name">{{request.user.username}}</h2><div class="settings-profile-info">{{user.profile.profession}}</div>
+                    </div>
+                     {% if userbalace %}       
+                  <div class="settings-profile-buttons-wrapper">
+                    <a href="#" class="upload-new-button w-button"> Balance ${{user.profile.balance}}</a>
+            <a href="#" class="delete-avatar-button w-button"> Withdrawls ${{user.profile.withdrawl_amount}}</a>
+                  </div>
+                  {% endif %}
+                  <p class="settings-paragraph-text">{{user.profile.bio}}</p>
+                    <div class="settings-socal-icons-wrapper">
+                      <a href="{{user.profile.facebook}}" target="_blank" class="settings-socal-icon-link-block w-inline-block"><div></div></a><a href="{{user.profile.skpye}}" target="_blank" class="settings-socal-icon-link-block w-inline-block"><div></div></a><a href="{{user.profile.twitter}}" target="_blank" class="settings-socal-icon-link-block w-inline-block"><div></div></a><a href="{{user.profile.linkedin}}" target="_blank" class="settings-socal-icon-link-block mr0 w-inline-block"><div></div></a>
+                    </div>
+                    
+                </div>
+                
+                <div class="card p-4 mt-3 text-center">
+                    <img src="{% static 'charts/scan.jpeg' %}" class="mx-auto mb-3" width="100" height="100" alt="QR Code">
+                    <a href="#" class="text-success">NFC/QR Code</a>
+                    <p class="text-muted">QR code image should be printed and attached to the company entry.</p>
+                </div>
+                
+                <div class="card p-4 mt-3">
+                    <h5>API Key</h5>
+                    <textarea class="form-control mb-2" readonly>rOm6xwi4frNgpHu13k5EkqjiONUHErt2dzwyMHBXv91du84Jey5enMbf6n5ASlQ0</textarea>
+                    <button class="btn btn-success btn-sm">Generate API Key</button>
+                    <a href="#" class="d-block mt-2 text-success">Read our API Docs</a>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="card p-4">
+                  <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="settings-tabs-wrapper w-tabs">
+                    <div class="settings-tab-menu w-tab-menu">
+                      <a data-w-tab="Tab 1" class="settings-tab-link w-inline-block w-tab-link w--current"><div>Profile</div></a> <a data-w-tab="Tab 4" class="settings-tab-link mr0 w-inline-block w-tab-link"><div>Sessions &amp; Login History</div></a>
+                    </div>
+                    
+                        <div class="settings-tabs-content w-tab-content">
+                            <div data-w-tab="Tab 1" class="settings-tab-pane w-tab-pane w--tab-active">
+                              <div class="settings-content-wrapper">
+                                <div class="settings-form-wrapper">
+                                  <div class="settings-form-block w-form">
+                                    <form id="email-form" name="email-form" data-name="Email Form" method="get" class="settings-form">
+                                      <div class="settings-form-singel-wrappper">
+                                        <div class="settings-singel">
+                                          <label for="email" class="settings-field-label">First Name</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email" data-name="Email"   id="email"disabled='true'  value="{{request.user.first_name}}  " disabled='true' />
+                                        </div>
+                                        <div class="settings-singel">
+                                          <label for="email-2" class="settings-field-label">Last Name</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2"  id="email-2"disabled='true' value="{{request.user.last_name}}"  />
+                                        </div>
+                                      </div>
+                                      <div class="settings-form-singel-wrappper">
+                                        <div class="settings-singel">
+                                          <label for="email-3" class="settings-field-label">Email Address</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-3" data-name="Email 3"  id="email-3"disabled='true' value="{{request.user.email}}"  />
+                                        </div>
+                                        <div class="settings-singel">
+                                          <label for="email-2" class="settings-field-label">Phone</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2"  id="email-2"disabled='true' value="{{user.profile.phone}}"  />
+                                        </div>
+                                        
+                                        
+                                        
+                                      </div>
+                                      <div class="settings-form-singel-wrappper">
+                                        <div class="settings-singel">
+                                          <label for="email-3" class="settings-field-label">Address</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-3" data-name="Email 3" id="email-3"disabled='true' value="{{user.profile.address}}"  />
+                                        </div>
+                                        <div class="settings-singel">
+                                          <label for="email-2" class="settings-field-label">City</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2"  id="email-2"disabled='true' value="{{user.profile.city}}"  />
+                                        </div>
+                                        
+                                        
+                                        
+                                      </div>
+                                      <div class="settings-form-singel-wrappper">
+                                        <div class="settings-singel">
+                                          <label for="email-3" class="settings-field-label">State</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-3" data-name="Email 3" id="email-3"disabled='true' value="{{user.profile.state}}"  />
+                                        </div>
+                                        <div class="settings-singel">
+                                          <label for="email-2" class="settings-field-label">Country</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2" id="email-2"disabled='true' value="{{user.profile.country}}"  />
+                                        </div>
+                                        
+                                        
+                                        
+                                      </div>
+                                      <div class="settings-form-singel-wrappper">
+                                        <div class="settings-singel">
+                                          <label for="email-3" class="settings-field-label">Facebook Url</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-3" data-name="Email 3"  id="email-3"disabled='true' value="{{user.profile.facebook}}"  />
+                                        </div>
+                                        <div class="settings-singel">
+                                          <label for="email-2" class="settings-field-label">Skype Url</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2"  id="email-2"disabled='true' value="{{user.profile.skype}}"  />
+                                        </div>
+                                        
+                                        
+                                        
+                                      </div>
+                                      <div class="settings-form-singel-wrappper">
+                                        <div class="settings-singel">
+                                          <label for="email-3" class="settings-field-label">Twitter Url</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-3" data-name="Email 3"   id="email-3"disabled='true' value="{{user.profile.twitter}}"  />
+                                        </div>
+                                        <div class="settings-singel">
+                                          <label for="email-2" class="settings-field-label">Linked</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2"   id="email-2"disabled='true' value="{{user.profile.linkedin}}"  />
+                                        </div>
+                                        
+                                        
+                                        
+                                      </div>
+                                      <div class="settings-form-singel-wrappper">
+                                         
+                                        <div  >
+                                          <a href="/auth/edit_profile" class="settings-button w-button">Update Profile</a>
+                                        </div>
+                                         
+                                       
+                                      </div>
+                                    </form>
+                                     
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                      
+                            <div data-w-tab="Tab 4" class="settings-tab-pane w-tab-pane">
+                              <div class="settings-content-wrapper">
+                                <div class="settings-table-wrapper">
+                                  <div class="active-sessions-table-wrapper mb25">
+                                    <div class="active-sessions-table-title-wrapper">
+                                      <h3 class="active-sessions-table-title">Last Login</h3>
+                                    </div>
+                                    <div class="active-sessions-table-heading-wrapper">
+                                      <div class="w-layout-grid active-sessions-table-grid">
+                                        <div id="w-node-_2664b31d-2e1c-7a41-f74a-0188a7d12636-6009bcf1" class="active-sessions-table-headings">
+                                          <h4 class="active-sessions-table-heading">Date/Time</h4>
+                                        </div>
+                                        
+                                        
+                                      </div>
+                                    </div>
+                                    <div class="active-sessions-table-content">
+                                      <div class="w-layout-grid active-sessions-table-content-grid">
+                                        <div id="w-node-baef3ee8-36a2-2677-ec41-4779453b2a12-6009bcf1" class="active-sessions-table-text-wrapper">
+                                          <div class="active-sessions-table-text-block">{{user.last_login}}</div>
+                                        </div>
+                                         
+                                         
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="active-sessions-table-wrapper">
+                                    <div class="active-sessions-table-title-wrapper">
+                                      <h3 class="active-sessions-table-title">Login History</h3>
+                                    </div>
+                                    <div class="active-sessions-table-heading-wrapper two">
+                                      <div class="w-layout-grid active-sessions-table-grid">
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce89-6009bcf1" class="active-sessions-table-headings">
+                                          <h4 class="active-sessions-table-heading">Date/Time</h4>
+                                        </div>
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce8c-6009bcf1" class="active-sessions-table-headings">
+                                          <h4 class="active-sessions-table-heading">City</h4>
+                                        </div>
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce8f-6009bcf1" class="active-sessions-table-headings">
+                                          <h4 class="active-sessions-table-heading">Country</h4>
+                                        </div>
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce92-6009bcf1" class="active-sessions-table-headings">
+                                          <h4 class="active-sessions-table-heading">IP Address</h4>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="active-sessions-table-content two">
+                                      {% for trace in trace  %}
+                                      <div class="w-layout-grid active-sessions-table-content-grid">
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce97-6009bcf1" class="active-sessions-table-text-wrapper">
+                                          <div class="active-sessions-table-text-block">{{trace.login_time}}</div>
+                                        </div>
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce9a-6009bcf1" class="active-sessions-table-text-wrapper">
+                                          <div class="active-sessions-table-text-block">{{trace.city}}</div>
+                                        </div>
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798ce9d-6009bcf1" class="active-sessions-table-text-wrapper">
+                                          <div class="active-sessions-table-text-block">{{trace.country}}</div>
+                                        </div>
+                                        <div id="w-node-_2703db15-1a2a-e6c3-6436-bf989798cea0-6009bcf1" class="active-sessions-table-text-wrapper">
+                                          <div class="active-sessions-table-text-block">{{trace.ip_address}}</div>
+                                        </div>
+                                      </div>
+                                      {% endfor %}
+                                    </div>
+                                        
+                                      </div>
+                                    </div>
+                                     
+                                  </div>
+                                </div>
+                              </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+ {% endblock %}

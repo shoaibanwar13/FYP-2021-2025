@@ -1,0 +1,18 @@
+<h1>welcome {{request.user.username}}</h1>
+<table>
+    <tr>
+        <th>Positive</th>
+        <th>Negative</th>
+        <th>Neutral</th>
+        <th>Final Result</th>
+    </tr>
+    {%for data in user_data %}
+    <tr>
+        <td>{{data.positive}}</td>
+        <td>{{data.negative}}</td>
+        <td>{{data.neutral}}</td>
+        <td>{{data.result}}</td>
+
+    </tr>
+    {% endfor %}
+</table>
