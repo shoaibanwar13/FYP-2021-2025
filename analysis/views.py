@@ -66,9 +66,11 @@ def contactus(request):
      user_data=User_Result.objects.filter(user=request.user)
      return render(request,'contact.html',{'user_data':user_data})
 def index(request):
+    
     plan=Plans.objects.all()
     print(plan)
     return render(request,'index2.html',{'plan':plan})
+   
 def aboutus(request):
     return render(request, 'about.html')
 
@@ -606,18 +608,7 @@ def Analytics_Dashboard(request):
    
     page_number_for_questions  = request.GET.get("page")
     page_obj_for_questions  = paginator_for_question_persentage.get_page(page_number_for_questions)
-        
 
-    
-     
-      
-
- 
-    
-
-   
-
-    
     significance_chart = fig1.to_html(full_html=False)
     relevance_chart = fig2.to_html(full_html=False)
     unique_post_chart=unique_post_fig.to_html(full_html=False)

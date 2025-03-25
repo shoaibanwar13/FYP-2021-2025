@@ -1,0 +1,67 @@
+{% extends 'dashboard.html' %}
+{% block content %} 
+{% load static %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        margin-top: 100px;
+    }
+    .card {
+        border-radius: 10px;
+    }
+    h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+ 
+</style>
+</head>
+<body>
+<div class="container">
+    <h2 class="mb-4">My Subscriptions</h2>
+    <div class="card shadow p-4">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Subscription Name</th>
+                    <th>Purchase Date</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Premium Plan</td>
+                    <td>2025-03-01</td>
+                    <td>$19.99</td>
+                    <td><span class="badge bg-success">Active</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Basic Plan</td>
+                    <td>2024-12-15</td>
+                    <td>$9.99</td>
+                    <td><span class="badge bg-danger">Expired</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Enterprise Plan</td>
+                    <td>2025-02-10</td>
+                    <td>$49.99</td>
+                    <td><span class="badge bg-success">Active</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+{% endblock %}

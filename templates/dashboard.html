@@ -40,8 +40,8 @@
         }
 
         .navbar {
-            background:rgb(195 197 199) !important;
-            color: white;
+            background:rgb(255, 255, 255) !important;
+            color: rgb(0, 0, 0);
             height: 65px;
             width: 100%;
             position: fixed;
@@ -50,9 +50,10 @@
             z-index: 1000;
             padding-top: 10px;
             padding-bottom: 10px;
+            border-bottom: 2px solid black;
         }
         .navbar-brand {
-            color: rgb(91, 97, 95);
+            color: rgb(0, 0, 0);
             font-weight: bold;
         }
         .navbar .nav-link, .navbar .dropdown-toggle {
@@ -73,7 +74,7 @@
         }
         .sidebar {
             width: 250px; 
-            background:rgb(91, 97, 95);
+            background:rgb(0, 0, 0);
             height: calc(100vh - 60px);
             padding: 15px;
             color: white;
@@ -93,8 +94,16 @@
             font-weight: bold;
         }
         .sidebar a:hover {
-            background:rgb(74, 77, 74);
+            background:rgb(102, 103, 102);
         }
+        .sidebar a.active { /* Keep the active link highlighted */
+    background: rgb(74, 77, 74);
+}
+.sidebar a:last-child:hover,
+.sidebar a:last-child form button:hover {
+    background: none; /* Keep background unchanged */
+    cursor: pointer; /* Optional: Keep pointer behavior */
+}
         .content {
             flex-grow: 1;
             /* padding: 80px 20px 20px; */
@@ -194,28 +203,55 @@
     
     <div class="container-fluid">
     <div class="row">
-        <div class="col-4"><div class="sidebar" id="sidebar">
-            <a href="/auth/Analytical/" class="active"><i class="fas fa-tachometer-alt" style="margin-right:8px"></i> Dashboard</a> 
-            <a href="#"><i class="fas fa-cart-arrow-down" style="margin-right:8px"></i> My Purchases</a>
-            <a href="#"><i class="fas fa-users" style="margin-right:8px"></i> Activities</a> 
-            <a href="#"><i class="fas fa-chart-line" style="margin-right:8px"></i> My Reports</a> 
-            <a href="/auth/profile/"><i class="fas fa-user-circle" style="margin-right:8px"></i> Profile</a> 
-            <a href="#"><i class="fas fa-edit" style="margin-right:8px"></i> Edit Profile</a> 
-            <a href="#"><i class="fas fa-question-circle" style="margin-right:8px"></i> Help</a> 
-            <a href="">
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button class="balance-categorys-button withdraw w-button" type="submit"><img src="https://assets.website-files.com/632e9fa0dfa1117a99e55716/633eb655f35096759fca7182_Sidebar%20Log%20Out%20Image.svg" loading="lazy" alt="" class="sidebar-log-out-image" /></button>
-                </form>
-            </a>
+        <div class="col-4">
+            <div class="sidebar" id="sidebar">
+                <a href="/auth/Analytical/" class="{% if request.path == '/auth/Analytical/' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt" style="margin-right:8px"></i> Dashboard
+                </a> 
+                <a href="/auth/Purchases/" class="{% if request.path == '/auth/Purchases/' %}active{% endif %}">
+                    <i class="fas fa-cart-arrow-down" style="margin-right:8px"></i> My Purchases
+                </a>
+                <a href="#" class="{% if request.path == '#' %}active{% endif %}">
+                    <i class="fas fa-users" style="margin-right:8px"></i> Activities
+                </a>
+                <a href="/auth/Reports/" class="{% if request.path == '/auth/Reports/' %}active{% endif %}">
+                    <i class="fas fa-chart-line" style="margin-right:8px"></i> My Reports
+                </a> 
+                <a href="/auth/profile/" class="{% if request.path == '/auth/profile/' %}active{% endif %}">
+                    <i class="fas fa-user-circle" style="margin-right:8px"></i> Profile
+                </a> 
+            <a href="/auth/edit_profile" class="{% if request.path == '/auth/edit_profile' %}active{% endif %}">
+                    <i class="fas fa-edit" style="margin-right:8px"></i> Edit Profile
+                </a> 
+                <a href="/auth/Help/" class="{% if request.path == '/auth/Help/' %}active{% endif %}">
+                    <i class="fas fa-question-circle" style="margin-right:8px"></i> Help
+                </a> 
+                <a href="">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="balance-categorys-button withdraw w-button" type="submit">
+                            <img src="https://assets.website-files.com/632e9fa0dfa1117a99e55716/633eb655f35096759fca7182_Sidebar%20Log%20Out%20Image.svg" loading="lazy" alt="" class="sidebar-log-out-image" />
+                        </button>
+                    </form>
+                </a>
+            </div>
         </div>
-    </div>
-   
+        
         <div class="col-8 content" id="content">
             <div id="change2" class="container">
                 {% block content %}
                 {% endblock %}      
             </div>
+            <div class="footer">
+                <div class="container text-center"> 
+                    <div>
+                        <hr style="border: 1px solid black; margin: 20px 0;">
+                    </div>
+                    <div class="footer-text-block" style="color: rgb(105, 105, 105);">   
+                      @ InTextify <a href="#" target="_blank" class="footer-text-link" style="color: rgb(105, 105, 105);">. UE Tech Team </a> ・ <a href="#" class="footer-text-link" style="color: rgb(105, 105, 105);">License</a>・Powered by <a href="#" target="_blank" class="footer-text-link"style="color: rgb(105, 105, 105);">UE Tech Technology </a>
+                    </div>
+                  </div>
+                </div>
              
             
         </div>

@@ -101,16 +101,17 @@ def profile(request):
     data = Profile.objects.get(user=request.user)
     
     # Check if user commission is zero
-    usercommession = data.commession == 0
+    # usercommession = data.commession == 0
     
     # Retrieve total balance of the user
-    totalbalance = data.balance
+    # totalbalance = data.balance
     
     # Retrieve current user profile
     currentuser = Profile.objects.filter(user=request.user)
     
     # Render profile template with relevant data
-    return render(request, 'profile.html', {'currentuser': currentuser, 'usercommession': usercommession, 'totalbalance': totalbalance})
+    # return render(request, 'profile.html', {'currentuser': currentuser, 'usercommession': usercommession, 'totalbalance': totalbalance})
+    return render(request, 'profile.html', {'currentuser': currentuser})
 
 def edit_profile(request):
     # Check if user activity needs to be traced, redirect if necessary
@@ -158,3 +159,10 @@ def edit_profile(request):
 
 def Analytical(request):
     return render(request,'AnalyticalDashboard.html')
+
+def Purchases(request):
+    return render(request,'Purchases.html')
+def Reports(request):
+    return render(request,'Reports.html')
+def Help(request):
+    return render(request,'Help.html')
