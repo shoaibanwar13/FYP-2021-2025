@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from analysis.models import Profile
+from analysis.models import Profile,Plan_purchase
 from .forms import SignUpForm,UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
@@ -10,6 +10,9 @@ from django.core.mail import EmailMessage
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.views.generic import View
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+import json
 #function base view
 def signup(request):
     if request.method == 'POST':
@@ -161,8 +164,36 @@ def Analytical(request):
     return render(request,'AnalyticalDashboard.html')
 
 def Purchases(request):
-    return render(request,'Purchases.html')
+    purchases = Plan_purchase.objects.all()
+    context = {
+    'purchases':purchases
+    }
+    
+    return render(request,'Purchases.html', context)
 def Reports(request):
     return render(request,'Reports.html')
 def Help(request):
     return render(request,'Help.html')
+
+def deactivate_subscription(request):
+    if request.method == "POST":
+        subscription_id = request.POST.get("subscription_id")
+        subscription = get_object_or_404(Plan_purchase, id=subscription_id)
+        
+        if subscription.status != "Inactive":
+            subscription.status = "Inactive"
+            subscription.save()
+
+        
+        return redirect("User_Purchases")  
+
+def activate_subscription(request):
+    if request.method == "POST":
+        subscription_id = request.POST.get("subscription_id")
+        subscription = get_object_or_404(Plan_purchase, id=subscription_id)
+        
+        if subscription.status != "Active":
+            subscription.status = "Active"
+            subscription.save()
+
+        return redirect("User_Purchases")  

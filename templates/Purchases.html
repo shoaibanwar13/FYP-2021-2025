@@ -1,6 +1,7 @@
 {% extends 'dashboard.html' %}
 {% block content %} 
 {% load static %}
+
 <style>
     body {
         background-color: #f8f9fa;
@@ -17,10 +18,11 @@
         font-weight: bold;
         color: #333;
     }
- 
+    .clickable-row {
+        cursor: pointer;
+    }
 </style>
-</head>
-<body>
+
 <div class="container">
     <h2 class="mb-4">My Subscriptions</h2>
     <div class="card shadow p-4">
@@ -30,38 +32,89 @@
                     <th>#</th>
                     <th>Subscription Name</th>
                     <th>Purchase Date</th>
+                    <th>Expire Date</th>
                     <th>Price</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Premium Plan</td>
-                    <td>2025-03-01</td>
-                    <td>$19.99</td>
-                    <td><span class="badge bg-success">Active</span></td>
+                {% for pr in purchases %}
+                <tr class="clickable-row" data-id="{{ pr.id }}" data-name="{{ pr.plan_name }}" data-date="{{ pr.created_at }}" data-price="{{ pr.plan_price }}" data-status="{{ pr.status }}">
+                    <td>{{ pr.id }}</td>
+                    <td>{{ pr.plan_name }}</td>
+                    <td>{{ pr.created_at }}</td>
+                    <td>{{ pr.plan_expired }}</td>
+                    <td>{{ pr.plan_price }}</td>
+                    <td><span class="badge {% if pr.status == 'Active' %}bg-success{% elif pr.status == 'Inactive' %}bg-primary{% else %} bg-danger {% endif %}">{{ pr.status }}</span></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Basic Plan</td>
-                    <td>2024-12-15</td>
-                    <td>$9.99</td>
-                    <td><span class="badge bg-danger">Expired</span></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Enterprise Plan</td>
-                    <td>2025-02-10</td>
-                    <td>$49.99</td>
-                    <td><span class="badge bg-success">Active</span></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="subscriptionModal" tabindex="-1" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header text-black">
+                <h4 class="modal-title" id="subscriptionTitle">Subscription Details</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="color:black">
+                <p><strong>Subscription Name:</strong> <span id="subName" class="text-primary"></span></p>
+                <p><strong>Purchase Date:</strong> <span id="subDate"></span></p>
+                <p><strong>Price:</strong> <span id="subPrice" class="text-success"></span></p>
+                <p><strong>Status:</strong> <span id="subStatus" class="badge bg-secondary"></span></p>
+            </div>
+            <div class="modal-footer">
+                
+                <form id="deactivateForm" method="POST" action="{% url 'deactivate-subscription' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="subscription_id" id="deactivateSubscriptionId">
+                    <button type="submit" id="deactivateBtn" class="btn btn-warning">Deactivate</button>
+                </form>
+                
+                <form id="activateForm" method="POST" action="{% url 'activate-subscription' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="subscription_id" id="activateSubscriptionId">
+                    <button type="submit" id="ActivateBtn" class="btn btn-success">Activate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+    document.querySelectorAll('.clickable-row').forEach(row => {
+        row.addEventListener('click', function () {
+            let subscriptionId = this.getAttribute('data-id');
+            let name = this.getAttribute('data-name');
+            let purchaseDate = this.getAttribute('data-date');
+            let price = this.getAttribute('data-price');
+            let status = this.getAttribute('data-status');
+
+            document.getElementById('subName').innerText = name;
+            document.getElementById('subDate').innerText = purchaseDate;
+            document.getElementById('subPrice').innerText = price;
+            document.getElementById('subStatus').innerText = status;
+
+            document.getElementById('deactivateSubscriptionId').value = subscriptionId;
+            document.getElementById('activateSubscriptionId').value = subscriptionId;
+
+            if (status === 'Active') {
+                document.getElementById('deactivateBtn').style.display = 'inline-block';
+                document.getElementById('ActivateBtn').style.display = 'none';
+            } else {
+                document.getElementById('ActivateBtn').style.display = 'inline-block';
+                document.getElementById('deactivateBtn').style.display = 'none';
+            }
+
+            var myModal = new bootstrap.Modal(document.getElementById('subscriptionModal'));
+            myModal.show();
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

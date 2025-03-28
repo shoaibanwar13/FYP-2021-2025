@@ -18,7 +18,8 @@ urlpatterns = [
     path('edit_profile/', edit_profile, name='edit_profile'),
     path('Analytical/',Analytical,name='User_profile'),
     path('emailverification/',emailverification,name="emailverification"),
-    
+    path('deactivate-subscription/', deactivate_subscription, name='deactivate-subscription'),
+    path('activate-subscription/', activate_subscription, name='activate-subscription'),
     
     #Password recovery :we use django builtin password recovery system
     #this func url render the pg that contain email field to send email 

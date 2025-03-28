@@ -179,9 +179,6 @@
     background-color: black !important;
     border-color: black !important;
 }
-
-
-
 </style>
 
 <button id="downloadReport" class="btn download-btn">
@@ -212,12 +209,14 @@
         </div>
     </div>
     
-    <!-- Row 1: Overview Charts -->
+    <!-- Row 1: -->
     <div class="row g-0">
+        {% if data_page %}
         <div>
             <h4 class="table-title text-center">All Unique Tags</h4>
         </div>
         <div class="table-responsive">
+            
             <table class="w-full border-collapse border border-gray-300 custom-table">
                 <thead class="bg-gray-200">
                     <tr>
@@ -284,18 +283,17 @@
                     </ul>
                 </nav>
                 </div>
-                {% comment %} {% endif %} {% endcomment %}
-            </div>
+             
+         
         </div>
-        <div  >
-            <div  class="col-md-12" >
-                {{ significance_chart|safe }}
-            </div>
-        </div>
+        {% endif %}
     </div>
     
-    <!-- Row 2: Detailed Insights -->
+    <!-- Row 2:  -->
     <div class="row g-0">
+        <div  class="col-md-12" >
+            {{ significance_chart|safe }}
+        </div>
         <div class="col-md-12" >
             <div >
                {{relevance_chart|safe}}
@@ -308,10 +306,9 @@
         </div>
     </div>
 
-    <!-- Row 3: Additional Analysis -->
+    <!-- Row 3: -->
     <div class="row g-0">
-        <div >
-            <div >
+            <div class="col-md-12" >
                     <h4 class="table-title text-center">Topics List</h4>
                     
                     <div class=" table-responsive">
@@ -372,17 +369,14 @@
                         </nav>
                         </div>
                 </div>
-            </div>
-        </div>
-        <div >
-            <div class="col-md-12" >
-                 {{papularity_chart|safe}}
-            </div>
-        </div>
-    </div>
 
-      <!-- Row 3: Detailed Insights -->
-      <div >
+                <div class="col-md-12" >
+                    {{papularity_chart|safe}}
+               </div>
+            </div>
+
+      <!-- Row 4: -->
+      <div  class="row g-0" >
             <div class="container mx-auto px-4 py-6">
                 <div class="bg-white shadow-md rounded-lg overflow-hidden table-responsive">
                     <table class="w-full border-collapse border border-gray-300 custom-table">
@@ -441,18 +435,16 @@
                     </nav>
                     </div>
         </div>
-        {% comment %} <div class="col-md-9">
+          <!-- <div class="col-md-12">
             <div class="card">
                 <img src="{% static 'charts/absoluteimpact.png' %}" alt="absoluteimpact">
             </div>
-        </div>
-    </div> {% endcomment %}
+        </div> -->
+    </div> 
  
-    <!-- Row 4: Heatmaps & Trends -->
-    <div  >
-        <div  >
-            <div  >
-              
+    <!-- Row 5:  -->
+    <div class="row g-0">
+        <div  class="col-md-12" >
                 <div class="container mx-auto px-4 py-6">
                     <div class="bg-white shadow-md rounded-lg table-responsive">
                         <table class="w-full border-collapse border border-gray-300 custom-table">
@@ -537,41 +529,34 @@
                         </div>
 
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-           <div>
-            <div>
+            </div>   
+            <div class="col-md-12">
                 <div>
                    {{difficulty_of_topics|safe}}
                 </div>
             </div>
-            <div >
+            <div  class="col-md-12">
                 <div  >
                      {{topic_trends_chart_html|safe}}
                 </div>
             </div>
-           </div>
-         
-        </div>
-        
     </div>
-    <!-- Row 3: Additional Analysis -->
+    <!-- Row 6 -->
  <div class="row g-0">
     <div class="col-md-12">
         <div class="card">
             {{question_persentage_chart|safe}}
         </div>
     </div>
-    <div class="col-md-2">
-        <div class="card">
-            
+    <div class="col-md-12">
+        <div class="card">  
         </div>
     </div>
-</div> 
-    <!-- Row 5: Additional Data Representations -->
-        <div>
-            <div>
+ </div> 
+
+    <!-- Row 7: -->
+        <div class="row g-0">
+            <div class="col-md-12">
                 <div class="bg-white shadow-md rounded-lg p-6 table-responsive">
                     <h4 class="text-center table-title">Topic Data</h4>
                     <table class="w-full border-collapse border border-gray-300 custom-table">
@@ -670,19 +655,10 @@
                                 {% endif %}
                             </ul>
                         </nav>
-                        </div>
-
-
-
-               
+                        </div>           
             </div>
         </div>
-
-
-
-
-
-
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     // Call the function for different metric values
@@ -713,6 +689,4 @@
         window.location.href = "path-to-your-report.pdf"; 
     });
     </script>
-</div>
-
 {% endblock %}
