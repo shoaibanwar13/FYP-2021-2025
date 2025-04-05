@@ -280,7 +280,7 @@ def upload_files(request):
                 }
 
                 
-                response = requests.post("http://0.0.0.0:8181/upload/", files=files, data=data)
+                response = requests.post("http://127.0.0.1:8000/upload/", files=files, data=data)
                 fastapi_data = response.json()
 
                
@@ -351,7 +351,7 @@ def upload_files(request):
                 file_instance.trends_of_topics.save("trends_of_topics.xlsx", ContentFile(excel_buffer9.read()))
                 file_instance.question_analysis_with_percentages.save("question_analysis_with_percentages.xlsx",ContentFile(excel_buffer10.read()))
 
-                return redirect("Analytics_Dashboard")
+                return redirect("analytics_dashboard")
                  
             except Exception as e:
                 return JsonResponse({"error": str(e)}, status=500)
