@@ -33,12 +33,18 @@ class Plans(models.Model):
     def __str__(self):
         return self.name 
 class Plan_purchase(models.Model): 
+    status ={
+        ('Active','Active') ,
+        ('Inactive','Inactive'),
+        ('Expired','Expired')
+    }
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='PlanBuy')
     plan_name=models.CharField(max_length=50)
     plan_price=models.DecimalField(max_digits=10,decimal_places=2)
     paid=models.BooleanField(default=False)
     plan_expired=models.IntegerField(default=32)
     created_at=models.DateTimeField(default=timezone.now)
+    status= models.CharField(max_length=50,default="Active" ,choices=status)
     def save(self,*args,**kwargs):
         if self.paid and not self.plan_expired:
             self.expired_date=self.created_at+timedelta(days=self.plan_expired)
