@@ -1,0 +1,221 @@
+{% extends 'dashboard.html' %}
+{% block content %} 
+{% load static %}
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .card {
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            background-color: #f9f9f9;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #222;
+        }
+        .help-link {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .help-link:hover {
+            text-decoration: none;
+            color: #444;
+        }
+        .social-icons {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            font-size: 50px;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color:rgb(44, 43, 43);
+        }
+        .video-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .faq-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-header {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .accordion-item {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-button {
+            
+            font-size: 1rem;
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .accordion-button:hover {
+            background: linear-gradient(135deg,rgb(92, 91, 91),rgb(84, 84, 84));
+            color: #fff;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg,rgb(17, 17, 18),rgb(40, 41, 41));
+            color: white;
+            font-size: 1rem;
+            border-bottom: 1px solid #fff;
+        }
+        
+        .accordion-body {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            background: #ffffff;
+            padding: 5px 15px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+    </style>
+
+<body>
+    <div class="container">
+        <h2 class="mb-4">Help Center</h2>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card p-3">
+                    <i class="fas fa-rocket text-danger"></i>
+                    <strong> Get Started</strong>
+                    <p>Check our online guide</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card p-3">
+                    <i class="fas fa-user text-success"></i>
+                    <strong> Roadmap</strong>
+                    <p>Request a feature & see our roadmap</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card p-3">
+                    <i class="fas fa-video text-primary"></i>
+                    <strong> Videos</strong>
+                    <p>Check our channel on YouTube</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card p-3">
+                    <i class="fas fa-comments text-info"></i>
+                    <strong> Contact Us</strong>
+                    <p>Keep in touch</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-container"> 
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/I3cjbB38Z4A?si=NHgQ5lBkc_1HmCi8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        
+<div class="faq-section">
+  <h2 class="faq-header">Frequently Asked Questions</h2>
+
+  <div class="accordion" id="faqAccordion">
+      <!-- FAQ Item 1 -->
+      {% comment %} <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading1">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                  What is InTextify and how does it work?
+              </button>
+          </h2>
+          <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                  InTextify is an AI-based web application that provides topic modeling and readability assessment for text data analysis.
+              </div>
+          </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                  How do I upload a CSV file for analysis?
+              </button>
+          </h2>
+          <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                  Simply navigate to the **Upload** section, select your CSV file, and click the upload button. The system will process and analyze the data automatically.
+              </div>
+          </div>
+      </div> {% endcomment %}
+
+      <!-- FAQ Item 3 -->
+      <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                  Can I download my analysis results?
+              </button>
+          </h2>
+          <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                  Yes! After the analysis is complete, you can download your results as a PDF report.
+              </div>
+          </div>
+      </div>
+
+      <!-- FAQ Item 4 -->
+      <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading4">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                  Is my uploaded data secure?
+              </button>
+          </h2>
+          <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                  Absolutely! We use encryption and strict security measures to ensure your data remains safe and private.
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+        {% comment %} <div class="social-icons">
+            <a href="#" style="color:blue"><i class="fab fa-facebook"></i></a>
+            <a href="#"  style="color:black"><i class="fab fa-twitter"></i></a>
+            <a href="#"  style="color:color: #007bff;"><i class="fab fa-linkedin"></i></a>
+            <a href="#"  style="color:pink"><i class="fab fa-instagram"></i></a>
+        </div> {% endcomment %}
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}

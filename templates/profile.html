@@ -4,12 +4,19 @@
 {% load static %}
 <style>
   .card {
-    background:rgb(195 197 199)  /* Light Grey */
+    background:white;
+    border: 1px solid black;
+    color:black; /* Light Grey */
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }
 </style>
 <body class="bg-light">
     <div class="container" style="margin-top: 100px;">
-        <h2 class="">Profile</h2>
+       <h2 style="color:black">Profile</h2>
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-4" style="margin-top: 20px;">
@@ -61,7 +68,7 @@
                                     <form id="email-form" name="email-form" data-name="Email Form" method="get" class="settings-form">
                                       <div class="settings-form-singel-wrappper">
                                         <div class="settings-singel">
-                                          <label for="email" class="settings-field-label">First Name</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email" data-name="Email"   id="email"disabled='true'  value="{{request.user.first_name}}  " disabled='true' />
+                                          <label for="email" class="settings-field-label">First Name</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email" data-name="Email"   id="email"disabled='true'  value="{{request.user.first_name}}" disabled='true' />
                                         </div>
                                         <div class="settings-singel">
                                           <label for="email-2" class="settings-field-label">Last Name</label><input  typye="text" class="settings-input w-input" maxlength="256" name="email-2" data-name="Email 2"  id="email-2"disabled='true' value="{{request.user.last_name}}"  />
@@ -125,7 +132,7 @@
                                       <div class="settings-form-singel-wrappper">
                                          
                                         <div  >
-                                          <a href="/auth/edit_profile" class="settings-button w-button">Update Profile</a>
+                                          <a href="/auth/password_reset" class="settings-button w-button">Change Password</a>
                                         </div>
                                          
                                        
