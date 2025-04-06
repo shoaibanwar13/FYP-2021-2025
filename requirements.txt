@@ -11,3 +11,4 @@ crispy-bootstrap5
 django-bootstrap5
 cloudinary
 django-cloudinary-storage
+gunicorn
