@@ -227,29 +227,15 @@
                     </tr>
                 </thead>
                     <tbody>
-                        <!-- {% for row in data_page %}
+                        {% for row in data_page %}
                         <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
                             {% for value in row.values %}
                                 <td class="py-3 px-6">{{ value }}</td>
+                                
                             {% endfor %}
                         </tr>
-                        {% endfor %} -->
-                        <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                            
-                                <td class="py-3 px-6">hr</td>
-                                <td class="py-3 px-6">hr</td>
-                                <td class="py-3 px-6">hr</td>
-                                <td class="py-3 px-6">hr</td>
-                           
-                        </tr>
-                        <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                            
-                                <td class="py-3 px-6">hgsdf</td>
-                                <td class="py-3 px-6">hr</td>
-                                <td class="py-3 px-6">hr</td>
-                                <td class="py-3 px-6">hr</td>
-                          
-                        </tr>
+                        {% endfor %}  
+                         
                     </tbody>
             </table>
 
@@ -314,26 +300,20 @@
                     <div class=" table-responsive">
                     <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow custom-table">
                             <thead>
-                                <tr">
+                                <tr>
                                     <th class="py-3 px-6 text-left">Topic Number</th>
                                     <th class="py-3 px-6 text-left">Words</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 text-sm font-light">
-                                <!-- {% for topic in page_obj %}
+                                 {% for topic_number, topic_words in page_obj %}
                                     <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                        <td class="py-3 px-6">{{ topic.0 }}</td>
-                                        <td class="py-3 px-6">{{ topic.1 }}</td>
+                                        <td class="py-3 px-6">{{ topic_number }}</td>
+                                        <td class="py-3 px-6">{{ topic_words }}</td>
                                     </tr>
-                                {% endfor %} -->
+                                {% endfor %}  
 
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6">dsgh</td>
-                                    <td class="py-3 px-6">asdgvh</td>
-                                </tr>
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6">dsgh</td>
-                                    <td class="py-3 px-6">asdgvh</td>
+                                 
                                 </tr>
                             </tbody>
                         </table>
@@ -383,26 +363,34 @@
                         <thead class="bg-gray-200">
                             <tr>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Generated Topic</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Popularity</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">View Count</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Favorite Count</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Score</th>
+                                {% comment %} <th class="border border-gray-300 px-4 py-2 text-left">Avg. View Count</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Avg Favorite Count</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Avg Score</th> {% endcomment %}
+                                <th class="border border-gray-300 px-4 py-2 text-left">Papularity</th>
+                                
+                                 
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- {% for row in page_obj_for_papularity %}
+                             {% for row in page_obj_for_papularity %}
+                             
                             <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
                                 <td class="py-3 px-6">{{ row.Topic }}</td>
-                                <td class="py-3 px-6">{{ row.Popularity }}</td>
+                                <td class="py-3 px-6">{{ row.ViewCount }}</td>
+                                <td class="py-3 px-6">{{ row.FavoriteCount }}</td>
+                                <td class="py-3 px-6">{{ row.Score }}</td>
+                                {% comment %} <td class="py-3 px-6">{{ row.ViewN }}</td>
+                                <td class="py-3 px-6">{{ row.FavoriteN }}</td>
+                                <td class="py-3 px-6">{{ row.ScoreN }}</td> {% endcomment %}
+                                <td class="py-3 px-6">{{ row.FusedP }}</td>
                             </tr>
-                            {% endfor %} -->
+                            {% endfor %}  
 
-                            <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                <td class="py-3 px-6">dgh</td>
-                                <td class="py-3 px-6">re</td>
-                            </tr>
-                            <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                <td class="py-3 px-6">rrfh</td>
-                                <td class="py-3 px-6">genj</td>
-                            </tr>
-
+                             
                         </tbody>
                     </table>
                 </div>
@@ -459,7 +447,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- {% for row in page_obj_for_difficulty %}
+                                {% for row in page_obj_for_difficulty %}
                                 <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
                                     <td class="py-3 px-6">{{ row.GeneratedTopic }}</td>
                                     <td class="py-3 px-6">{{ row.TotalQuestions }}</td>
@@ -468,33 +456,9 @@
                                     <td class="py-3 px-6">{{ row.MedHrsToGetAccAnsNorm }}</td>
                                     <td class="py-3 px-6">{{ row.FusedDifficulty }}</td>
                                 </tr>
-                                {% endfor %} -->
+                                {% endfor %}  
                                 
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6">sdfhb</td>
-                                    <td class="py-3 px-6">row.TotalQuestions</td>
-                                    <td class="py-3 px-6"> row.UnansweredQuestions </td>
-                                    <td class="py-3 px-6"> row.PctQWoAcceptedAnswerNorm </td>
-                                    <td class="py-3 px-6"> row.MedHrsToGetAccAnsNorm </td>
-                                    <td class="py-3 px-6"> row.FusedDifficulty </td>
-                                </tr>
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6">sdfhb</td>
-                                    <td class="py-3 px-6">row.TotalQuestions</td>
-                                    <td class="py-3 px-6"> row.UnansweredQuestions </td>
-                                    <td class="py-3 px-6"> row.PctQWoAcceptedAnswerNorm </td>
-                                    <td class="py-3 px-6"> row.MedHrsToGetAccAnsNorm </td>
-                                    <td class="py-3 px-6"> row.FusedDifficulty </td>
-                                </tr>
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6">sdfhb</td>
-                                    <td class="py-3 px-6">row.TotalQuestions</td>
-                                    <td class="py-3 px-6"> row.UnansweredQuestions </td>
-                                    <td class="py-3 px-6"> row.PctQWoAcceptedAnswerNorm </td>
-                                    <td class="py-3 px-6"> row.MedHrsToGetAccAnsNorm </td>
-                                    <td class="py-3 px-6"> row.FusedDifficulty </td>
-                                </tr>
-                              
+                                 
                             </tbody>
                         </table>
                     </div>
@@ -574,7 +538,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- {% for row in page_obj_for_questions %}
+                            {% for row in page_obj_for_questions %}
                             <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
                                 <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
                                     <td class="py-3 px-6">{{ row.GeneratedTopic }}</td>
@@ -588,43 +552,9 @@
                                     <td class="py-3 px-6">{{ row.Why_Percentage }}</td>
                                 </tr>
                             </tr>
-                            {% endfor %} -->
+                            {% endfor %} 
 
-                            <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6"> row.GeneratedTopic </td>
-                                    <td class="py-3 px-6"> row.How </td>
-                                    <td class="py-3 px-6"> row.Others </td>
-                                    <td class="py-3 px-6"> row.What </td>
-                                    <td class="py-3 px-6"> row.Why </td>
-                                    <td class="py-3 px-6"> row.How_Percentage </td>
-                                    <td class="py-3 px-6"> row.Others_Percentage </td>
-                                    <td class="py-3 px-6"> row.What_Percentage </td>
-                                    <td class="py-3 px-6"> row.Why_Percentage </td>
-                                </tr>
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6"> row.GeneratedTopic </td>
-                                    <td class="py-3 px-6"> row.How </td>
-                                    <td class="py-3 px-6"> row.Others </td>
-                                    <td class="py-3 px-6"> row.What </td>
-                                    <td class="py-3 px-6"> row.Why </td>
-                                    <td class="py-3 px-6"> row.How_Percentage </td>
-                                    <td class="py-3 px-6"> row.Others_Percentage </td>
-                                    <td class="py-3 px-6"> row.What_Percentage </td>
-                                    <td class="py-3 px-6"> row.Why_Percentage </td>
-                                </tr>
-                                <tr class="border-b border-gray-300 hover:bg-gray-100 transition">
-                                    <td class="py-3 px-6"> row.GeneratedTopic </td>
-                                    <td class="py-3 px-6"> row.How </td>
-                                    <td class="py-3 px-6"> row.Others </td>
-                                    <td class="py-3 px-6"> row.What </td>
-                                    <td class="py-3 px-6"> row.Why </td>
-                                    <td class="py-3 px-6"> row.How_Percentage </td>
-                                    <td class="py-3 px-6"> row.Others_Percentage </td>
-                                    <td class="py-3 px-6"> row.What_Percentage </td>
-                                    <td class="py-3 px-6"> row.Why_Percentage </td>
-                                </tr>
-                            </tr>
+                             
                         </tbody>
                     </table>
                 </div>
