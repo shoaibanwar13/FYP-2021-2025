@@ -20,35 +20,35 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from .models import Analysis
-# send email to expire  plan user
-def send_mail(email,user,plan_name):
-    email_subject2 = "Plan Expire Date Is Approaching "
-    message2 = render_to_string('expire_plan.html', {
-                'user':user,
-                'plan_name':plan_name
+# # send email to expire  plan user
+# def send_mail(email,user,plan_name):
+#     email_subject2 = "Plan Expire Date Is Approaching "
+#     message2 = render_to_string('expire_plan.html', {
+#                 'user':user,
+#                 'plan_name':plan_name
                  
-        })
-    email_message2 = EmailMessage(email_subject2, message2, settings.EMAIL_HOST_USER, [email])
-    email_message2.send()
-# Function to start a scheduler for sending emails
-def start_scheduler(email,user,plan_name):
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(send_mail, 'interval',hours=0,minutes=0,seconds=0,args=[email,user,plan_name])  # Change as needed
-    scheduler.start()
-#Function to Detect expire plan to  email when plan expire to start schedular
-def sendemail():
+#         })
+#     email_message2 = EmailMessage(email_subject2, message2, settings.EMAIL_HOST_USER, [email])
+#     email_message2.send()
+# # Function to start a scheduler for sending emails
+# def start_scheduler(email,user,plan_name):
+#     scheduler = BackgroundScheduler()
+#     scheduler.add_job(send_mail, 'interval',hours=0,minutes=0,seconds=0,args=[email,user,plan_name])  # Change as needed
+#     scheduler.start()
+# #Function to Detect expire plan to  email when plan expire to start schedular
+# def sendemail():
      
-    plans = Plan_purchase.objects.filter(paid=True)
-    for plan in plans:
-        expiredate=plan.expiration_date
-        days_until_expiration = (expiredate - timezone.now()).days
-        print(days_until_expiration)
-        if 0 < days_until_expiration <= 1:
-            user=plan.user
-            email=plan.user.email
-            plan_name=plan.plan_name
-            plan.delete()
-            start_scheduler(email,user,plan_name)
+#     plans = Plan_purchase.objects.filter(paid=True)
+#     for plan in plans:
+#         expiredate=plan.expiration_date
+#         days_until_expiration = (expiredate - timezone.now()).days
+#         print(days_until_expiration)
+#         if 0 < days_until_expiration <= 1:
+#             user=plan.user
+#             email=plan.user.email
+#             plan_name=plan.plan_name
+#             plan.delete()
+#             start_scheduler(email,user,plan_name)
 #calling sending mail function
 
 
