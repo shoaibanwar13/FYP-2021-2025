@@ -267,6 +267,7 @@ def upload_files(request):
         file4 = request.FILES.get("file4")   
         column_name = request.POST.get("column_name")
         num_topics = request.POST.get("num_topics")
+        print(num_topics,"==============")
 
         if file1 and file2 and file4:
             try:
@@ -282,7 +283,7 @@ def upload_files(request):
                 }
 
                 
-                response = requests.post("http://127.0.0.1:8000/upload/", files=files, data=data)
+                response = requests.post("https://fyp-topic-modeling.onrender.com/upload/", files=files, data=data)
                 fastapi_data = response.json()
 
                
