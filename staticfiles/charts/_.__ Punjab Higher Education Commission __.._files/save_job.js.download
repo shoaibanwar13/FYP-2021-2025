@@ -1,0 +1,437 @@
+function check_app_status()
+{
+	var status = parseInt($( "select#status option:selected").val());	
+	if (status >= 5)
+	{
+		//alert(status);
+		if (status == 6)
+		{
+			$("#call_letter").hide();		
+		}
+		else
+		{
+			$("#call_letter").show();		
+		}
+	}
+	else
+	{
+		$("#call_letter").hide();			
+	}
+}
+function save_job(loginid, jobid, index) 
+{
+	 var loginid = parseInt(loginid);
+	 var post_url = window.location.protocol + "//" + window.location.host + "/";
+	 if (loginid)
+	 {
+		 // show the div
+		$("#job_loading_"+index).css('display', 'inline-block');
+		
+		$("#app_submit_"+index).hide();
+		$("#login_issue_"+index).hide();
+		$("#age_issue_"+index).hide();
+		$("#exp_issue_"+index).hide();
+		$("#quali_issue_"+index).hide();
+		$("#already_apply_"+index).hide();
+		
+		$.ajax({
+			  type: "POST",
+			  url: post_url+"save_job.php",
+			  data: "loginid="+ loginid+'&jobid='+jobid,
+			  success: function(data){
+				  $("#job_loading_"+index).hide();
+				  
+				  var retrn_val = data.split('_');
+				  var fst_val = parseInt(retrn_val[0]);
+				  var sec_val = retrn_val[1];
+				  /*alert(fst_val);
+				  alert(sec_val);*/
+				  if (fst_val == 0 && sec_val == 'error')
+				  {
+					$("#login_issue_"+index).css('display', 'inline-block');
+					
+				  }
+				  else if (fst_val == 5 && sec_val == 'error')
+				  {
+					$("#already_apply_"+index).css('display', 'inline-block');
+					
+				  }
+				  else if (fst_val == 2 && sec_val == 'error') // age issue
+				  {
+					$("#age_issue_"+index).css('display', 'inline-block');
+					
+				  }
+				 
+				  else if (fst_val == 4 && sec_val == 'error') // qualification issue
+				  {
+					$("#quali_issue_"+index).css('display', 'inline-block');
+					
+				  }
+				  else 
+				  {
+					//alert('ok');
+					$("#app_submit_"+index).css('display', 'inline-block');
+					$("#print_app_"+index).css('display', 'inline-block');
+					var fields = data.split('_');
+					$("a#print_app_"+index).attr("href", post_url+"pdf/mpdf60/examples/job_file.php?id="+fields[0]+"&key="+fields[1]);
+				  }
+				  
+			  }
+		  });
+		 
+	 }
+	 else
+	 {
+		$("#job_loading_"+index).hide();
+		alert('You need to sign in to apply this job');
+	 }
+}
+function exit_fnc()
+{
+	var newURL = window.location.protocol + "//" + window.location.host + "/job_apps.php";
+	//alert(newURL);
+	window.location = newURL;	
+}
+
+function continue_next(prev,next)
+{	
+	var data_ok = 1;
+	var min_qual = parseInt($( "select#min_qual option:selected").val());	
+	var min_exp = parseInt($( "select#min_exp option:selected").val());	
+	var max_age = parseInt($( "select#max_age option:selected").val());
+	var banK_receipt = $('#banK_receipt').val();
+	var banK_name = $('#banK_name').val();
+	var deposit_date = $('#deposit_date').val();	
+	var branch_code = $('#branch_code').val();	
+	
+	var user_id = $('#user_id').val();	
+	var job_id = $('#job_id').val();	
+	
+	//alert(min_qual);
+	if (min_qual == 1 || min_qual == 2)
+	{
+		$("#min_qual").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#min_qual").focus();
+		$("#min_qual").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (min_exp == 1 || min_exp == 2)
+	{
+		$("#min_exp").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#min_exp").focus();
+		$("#min_exp").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (max_age == 1 || max_age == 2)
+	{
+		$("#max_age").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#max_age").focus();
+		$("#max_age").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (banK_receipt)
+	{
+		$("#banK_receipt").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#banK_receipt").focus();
+		$("#banK_receipt").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (banK_name)
+	{
+		$("#banK_name").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#banK_name").focus();
+		$("#banK_name").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (deposit_date)
+	{
+		$("#deposit_date").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#deposit_date").focus();
+		$("#deposit_date").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (branch_code)
+	{
+		$("#branch_code").removeClass( "border_2" );	
+	}
+	else
+	{
+		data_ok = 0;
+		$("#branch_code").focus();
+		$("#branch_code").addClass( "border_2" );
+		return false;	
+	}
+	
+	if (data_ok)
+	{
+		if (min_qual == 2 && min_exp == 2 && max_age == 2)
+		{
+			$('#save_error_criteria').hide();
+			
+			$("#tab_"+prev).removeClass( "current" );
+			$("#tab_"+next).addClass( "current" );
+			$("#tab-"+prev).removeClass( "current" );
+			$("#tab-"+next).addClass( "current" );
+			$('html,body').scrollTop(0); 	
+		}
+		else
+		{
+			$('#save_error_criteria').show();	
+		}
+	}
+}
+function continue_prev(prev,next)
+{
+	$("#tab_"+next).removeClass( "current" );
+	$("#tab_"+prev).addClass( "current" );
+	$("#tab-"+next).removeClass( "current" );
+	$("#tab-"+prev).addClass( "current" );
+	$('html,body').scrollTop(0); 	
+}
+$(document).ready(function (e) {
+	
+	$('#full_paper').bind('change', function() {
+
+  
+	  //this.files[0].size gets the size of your file.
+	  //alert(this.files[0].size);
+	  var filesize = this.files[0].size;
+	  
+	  if (filesize < 2080532)
+	  {
+		  $('#file_error_3').css('display', 'none');
+		  $('#paper_submit_btn').css('display', 'block');
+	  }
+	  else
+	  {
+		  alert('Upload file size should not exceed 2 MB');
+		  $('#file_error_3').css('display', 'inline-block');
+		  $('#paper_submit_btn').css('display', 'none');
+	  }
+	});
+	$("#check_list").on('submit',(function(e) {
+	e.preventDefault();
+	tab = 0;
+	var next_tab = parseInt(tab) + 1;
+		
+	var data_ok = 1;
+	var min_qual = parseInt($( "select#min_qual option:selected").val());	
+	var min_exp = parseInt($( "select#min_exp option:selected").val());	
+	var max_age = parseInt($( "select#max_age option:selected").val());
+	var banK_receipt = $('#banK_receipt').val();
+	var banK_name = $('#banK_name').val();
+	var deposit_date = $('#deposit_date').val();	
+	var branch_code = $('#branch_code').val();	
+	
+	var user_id = $('#user_id').val();	
+	var job_id = $('#job_id').val();	
+	
+	//alert(min_qual);
+	
+	if (min_qual == 2 && min_exp == 2 && max_age == 2)
+	{
+		$('#save_error_criteria').hide();
+	}
+	else
+	{
+		data_ok = 0;
+		$('#save_error_criteria').show();	
+		return false;	
+	}
+	
+	if (data_ok)
+	{
+			
+		var user_id = $('#user_id').val();
+		if (user_id)
+		{
+			$('.save_error_check_list').hide();
+			$('#file_upload_error').hide();
+			
+			//alert(eligibility);
+			$('#ajax_loading_check_list').show();
+			$.ajax({
+				url: "save_bank_info.php",   	// Url to which the request is send
+				type: "POST",      				// Type of request to be send, called as method
+				data:  new FormData(this), 		// Data sent to server, a set of key/value pairs representing form fields and values 
+				contentType: false,       		// The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
+				cache: false,					// To unable request pages to be cached
+				processData:false,  			// To send DOMDocument or non processed data file it is set to false (i.e. data should not be in the form of string)
+				success: function(data)  		// A function to be called if request succeeds
+				{
+					$('#ajax_loading_check_list').hide();
+					var new_data = parseInt(data);
+					//alert(new_data);
+					if (new_data == -1)
+					{
+						$('#file_upload_error').show();
+						$('.save_error_check_list').hide();
+					}
+					else if (new_data == 0)
+					{
+						$('.save_error_check_list').show();
+						$('#file_upload_error').hide();
+						
+					}
+					else
+					{
+						$('.save_error_check_list').hide();
+						$('#file_upload_error').hide();
+						
+						$('html,body').scrollTop(0);
+						show_tab(next_tab);
+
+					}
+
+				}	        
+
+		   });
+
+		}
+
+		else
+
+		{
+
+			alert('please login to save data');
+
+			return false;
+
+		}
+	}
+
+	}));
+	
+	$("#job_form_others").on('submit',(function(e) {
+			
+			e.preventDefault();
+			
+			tab = 8;
+			var next_tab = parseInt(tab) + 1;
+			
+			var record_id = $('.record_id').val();
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			
+			var action = $(e.target).find("input[type=submit]:focus");
+			var submit_clicked = action[0].className;
+			
+			if (record_id)
+			{
+				$('#save_error_others').hide();
+				$('#ajax_loading_others').show();
+				
+				$.ajax({
+					url: post_url+"save_job_others.php",   	// Url to which the request is send
+					type: "POST",      				// Type of request to be send, called as method
+					data:  new FormData(this), 		// Data sent to server, a set of key/value pairs representing form fields and values 
+					contentType: false,       		// The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
+					cache: false,					// To unable request pages to be cached
+					processData:false,  			// To send DOMDocument or non processed data file it is set to false (i.e. data should not be in the form of string)
+					success: function(data)  		// A function to be called if request succeeds
+					{
+						$('#ajax_loading_others').hide();
+						
+						var new_data = parseInt(data);
+						//alert(new_data);
+						if (new_data == 0)
+						{
+							$('#save_error_others').show();
+						}
+						else
+						{
+							
+							$('#save_error_others').hide();
+							if (submit_clicked == 'save')
+							{
+								$('html,body').scrollTop(0);
+								show_tab(next_tab);
+							}
+							else
+							{
+								var newURL = window.location.protocol + "//" + window.location.host + "/phecadmins/admin.php?mod=manageJobs";
+								//alert(newURL);
+								window.location = newURL;
+							}
+						}
+						
+					}	        
+			   });
+			}
+		}));
+		
+		$("#job_form_status").on('submit',(function(e) {
+		
+		e.preventDefault();
+		
+		var record_id = $('.record_id').val();
+		var post_url = window.location.protocol + "//" + window.location.host + "/";
+		
+		
+		if (record_id)
+		{
+			$('#save_error_status').hide();
+			$('#ajax_loading_status').show();
+			
+			$.ajax({
+				url: post_url+"save_job_status.php",   	// Url to which the request is send
+				type: "POST",      				// Type of request to be send, called as method
+				data:  new FormData(this), 		// Data sent to server, a set of key/value pairs representing form fields and values 
+				contentType: false,       		// The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
+				cache: false,					// To unable request pages to be cached
+				processData:false,  			// To send DOMDocument or non processed data file it is set to false (i.e. data should not be in the form of string)
+				success: function(data)  		// A function to be called if request succeeds
+				{
+					$('#ajax_loading_status').hide();
+					
+					var new_data = parseInt(data);
+					//alert(new_data);
+					if (new_data == 0)
+					{
+						$('#save_error_status').show();
+					}
+					else
+					{
+						
+						$('#save_error_status').hide();
+						//alert('i am here');
+						var newURL = window.location.protocol + "//" + window.location.host + "/phecadmins/admin.php?mod=manageJobs";
+						//alert(newURL);
+						window.location = newURL;
+						
+					}
+					
+				}	        
+		   });
+		}
+	}));
+});
