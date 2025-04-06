@@ -283,7 +283,7 @@ def upload_files(request):
                 }
 
                 
-                response = requests.post("https://fyp-topic-modeling.onrender.com/upload/", files=files, data=data)
+                response = requests.post("https://dependent-marci-softapex-technologies-debd9874.koyeb.app/upload/", files=files, data=data)
                 fastapi_data = response.json()
 
                
