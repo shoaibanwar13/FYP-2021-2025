@@ -20,35 +20,35 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from .models import Analysis
-# send email to expire  plan user
-def send_mail(email,user,plan_name):
-    email_subject2 = "Plan Expire Date Is Approaching "
-    message2 = render_to_string('expire_plan.html', {
-                'user':user,
-                'plan_name':plan_name
+# # send email to expire  plan user
+# def send_mail(email,user,plan_name):
+#     email_subject2 = "Plan Expire Date Is Approaching "
+#     message2 = render_to_string('expire_plan.html', {
+#                 'user':user,
+#                 'plan_name':plan_name
                  
-        })
-    email_message2 = EmailMessage(email_subject2, message2, settings.EMAIL_HOST_USER, [email])
-    email_message2.send()
-# Function to start a scheduler for sending emails
-def start_scheduler(email,user,plan_name):
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(send_mail, 'interval',hours=0,minutes=0,seconds=0,args=[email,user,plan_name])  # Change as needed
-    scheduler.start()
-#Function to Detect expire plan to  email when plan expire to start schedular
-def sendemail():
+#         })
+#     email_message2 = EmailMessage(email_subject2, message2, settings.EMAIL_HOST_USER, [email])
+#     email_message2.send()
+# # Function to start a scheduler for sending emails
+# def start_scheduler(email,user,plan_name):
+#     scheduler = BackgroundScheduler()
+#     scheduler.add_job(send_mail, 'interval',hours=0,minutes=0,seconds=0,args=[email,user,plan_name])  # Change as needed
+#     scheduler.start()
+# #Function to Detect expire plan to  email when plan expire to start schedular
+# def sendemail():
      
-    plans = Plan_purchase.objects.filter(paid=True)
-    for plan in plans:
-        expiredate=plan.expiration_date
-        days_until_expiration = (expiredate - timezone.now()).days
-        print(days_until_expiration)
-        if 0 < days_until_expiration <= 1:
-            user=plan.user
-            email=plan.user.email
-            plan_name=plan.plan_name
-            plan.delete()
-            start_scheduler(email,user,plan_name)
+#     plans = Plan_purchase.objects.filter(paid=True)
+#     for plan in plans:
+#         expiredate=plan.expiration_date
+#         days_until_expiration = (expiredate - timezone.now()).days
+#         print(days_until_expiration)
+#         if 0 < days_until_expiration <= 1:
+#             user=plan.user
+#             email=plan.user.email
+#             plan_name=plan.plan_name
+#             plan.delete()
+#             start_scheduler(email,user,plan_name)
 #calling sending mail function
 
 
@@ -282,7 +282,7 @@ def upload_files(request):
                 }
 
                 
-                response = requests.post("http://0.0.0.0:8181/upload/", files=files, data=data)
+                response = requests.post("http://127.0.0.1:8000/upload/", files=files, data=data)
                 fastapi_data = response.json()
 
                
@@ -353,7 +353,7 @@ def upload_files(request):
                 file_instance.trends_of_topics.save("trends_of_topics.xlsx", ContentFile(excel_buffer9.read()))
                 file_instance.question_analysis_with_percentages.save("question_analysis_with_percentages.xlsx",ContentFile(excel_buffer10.read()))
 
-                return redirect("Analytics_Dashboard")
+                return redirect("analytics_dashboard")
                  
             except Exception as e:
                 return JsonResponse({"error": str(e)}, status=500)
@@ -373,18 +373,26 @@ import numpy as np
 import plotly.io as pio
 def Analytics_Dashboard(request):
     user = request.user
-    data = Analysis.objects.filter(user=user).first()
+    data = Analysis.objects.filter(user=user).latest('uploaded_at')
     if data.unique_tags.name.endswith(".csv"):
-            df = pd.read_csv(data.unique_tags)
+            df = pd.read_csv(data.unique_tags,header=None)
     elif data.unique_tags.name.endswith(".xlsx"):
-            df = pd.read_excel(data.unique_tags, engine="openpyxl")
+            df = pd.read_excel(data.unique_tags, engine="openpyxl",header=None)
      
-    df = df.iloc[:, 0].dropna().reset_index(drop=True)  # Ensuring it's a clean list
+    # df = df.iloc[:, 0].dropna().reset_index(drop=True)  # Ensuring it's a clean list
 
         # Reshape data into 4 columns
+    flat_list = df[0].tolist()
+
+    # Set how many columns you want
     num_columns = 4
-    reshaped_data = [df[i:i+num_columns].tolist() for i in range(0, len(df), num_columns)]
-    reshaped_df = pd.DataFrame(reshaped_data).fillna("")  # Convert back to DataFrame
+
+    # Split the list into chunks of 4
+    reshaped_data = [flat_list[i:i+num_columns] for i in range(0, len(flat_list), num_columns)]
+
+    # Create new DataFrame
+    reshaped_df = pd.DataFrame(reshaped_data).fillna("")
+
     
      
         
@@ -394,19 +402,22 @@ def Analytics_Dashboard(request):
 
         # Pagination logic
     page = request.GET.get("page", 1)
-    paginator = Paginator(data_list, 10)  # Show 10 records per page
+    paginator = Paginator(data_list, 30)  # Show 10 records per page
 
     try:
         data_page = paginator.page(page)
     except:
          data_page = paginator.page(1)    
-    signi_and_relevance = data.signi_and_rel.open("rb")
+    
     
     if data.signi_and_rel.name.endswith(".csv"):
-            df = pd.read_csv( signi_and_relevance)
+            df = pd.read_csv(data.signi_and_rel)
+            
+            
          
     elif data.signi_and_rel.name.endswith(".xlsx"):
-            df = pd.read_excel( signi_and_relevance, engine="openpyxl")
+            df = pd.read_excel(data.signi_and_rel, engine="openpyxl")
+           
            
         
 
@@ -417,6 +428,7 @@ def Analytics_Dashboard(request):
                 return render(request, "AnalyticalDashboard.html", {"significance_chart": f"<p>Missing column: {col}</p>"})
 
         # Generate Plotly Line Chart for Significance
+    
     fig1 = px.line(df, 
                 x="unique_tags", 
                 y="Significance", 
@@ -506,12 +518,17 @@ def Analytics_Dashboard(request):
     elif data.LDA_Topic.name.endswith(".xlsx"):
             df = pd.read_excel(data.LDA_Topic, engine="openpyxl",index_col=0)
             print(df)
-    df.rename(columns={0: "Topic Number", 1: "Topic Words"}, inplace=True)
+    df.reset_index(inplace=True)
+
+    # Rename the columns
+    df.rename(columns={"index": "Topic Number", df.columns[1]: "Topic Words"}, inplace=True)
+
+    # Convert to list of tuples
     topics = list(df.itertuples(index=False, name=None))
     
 
     # Paginate results
-    paginator_for_topics = Paginator(topics, 1)  # Show 10 topics per page
+    paginator_for_topics = Paginator(topics, 30)  # Show 10 topics per page
     page_number_for_topics = request.GET.get("page")
     page_obj = paginator_for_topics.get_page(page_number_for_topics)
     if data.papularity_of_topics.name.endswith(".csv"):
@@ -528,7 +545,7 @@ def Analytics_Dashboard(request):
     papularity = px.pie(
         df, 
         names="Topic",  # Now "Topic" is a proper column
-        values="Popularity",
+        values="FusedP",
         title="Topic Popularity Distribution",
         color_discrete_sequence=px.colors.sequential.Blues_r  # Stylish Blue Color
     )
@@ -536,7 +553,7 @@ def Analytics_Dashboard(request):
     print(data_list)
 
     
-    paginator_for_papularity = Paginator(data_list, 4)  # Show 5 items per page
+    paginator_for_papularity = Paginator(data_list, 20)  # Show 5 items per page
     page_number_for_papularity = request.GET.get("page")
     page_obj_for_papularity = paginator_for_papularity.get_page(page_number_for_papularity)
     if data.difficulty_of_topics.name.endswith(".csv"):
@@ -545,7 +562,7 @@ def Analytics_Dashboard(request):
             df = pd.read_excel(data.difficulty_of_topics, engine="openpyxl")
     data_list_for_difficulty= df.to_dict(orient="records")
     
-    paginator_for_difficulty = Paginator(data_list_for_difficulty, 5)  # Show 5 records per page
+    paginator_for_difficulty = Paginator(data_list_for_difficulty, 20)  # Show 5 records per page
    
     page_number_for_difficulty  = request.GET.get("page")
     page_obj_for_difficulty  = paginator_for_difficulty.get_page(page_number_for_difficulty)
@@ -602,9 +619,9 @@ def Analytics_Dashboard(request):
         margin=dict(t=50, b=150)
     )
     data_list_for_questions= df.to_dict(orient="records")
-    print(data_list_for_questions)
+    print("Debuges data",data_list_for_questions)
     
-    paginator_for_question_persentage = Paginator(data_list_for_questions, 5)  # Show 5 records per page
+    paginator_for_question_persentage = Paginator(data_list_for_questions, 20)  # Show 5 records per page
    
     page_number_for_questions  = request.GET.get("page")
     page_obj_for_questions  = paginator_for_question_persentage.get_page(page_number_for_questions)

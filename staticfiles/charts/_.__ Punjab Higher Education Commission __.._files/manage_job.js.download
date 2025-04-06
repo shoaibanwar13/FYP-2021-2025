@@ -1,0 +1,220 @@
+function remove_qlification(index)
+{
+	var result = confirm("Are you sure you want to delete?");
+	if (result) {
+		$('#qlificationRow_'+index).remove();
+	}
+}
+function new_job_vals()
+{
+	nicEditors.findEditor('description').saveContent();	
+	nicEditors.findEditor('area_work').saveContent();	
+}
+
+function auto_complete_job_fields(index, val)
+{
+   var keyword = $(val).val();
+   var post_url = window.location.protocol + "//" + window.location.host + "/";
+   //alert(keyword);
+   //alert(index);
+   $.ajax({
+	  type: "POST",
+	  url: post_url+"major_fields.php",
+	  data:'keyword='+keyword+'&index='+index+'&admin=1',
+	  beforeSend: function(){
+		  $("#search-box_"+index).css("background","#FFF url(LoaderIcon.gif) no-repeat 129px");
+	  },
+	  success: function(data){
+		  $("#suggesstion-box_"+index).show();
+		  $("#suggesstion-box_"+index).html(data);
+		  $("#search-box_"+index).css("background","#FFF");
+	  }
+	  });
+	
+} 
+function remove_row_job(index)
+
+{
+
+	var result = confirm("Are you sure you want to delete?");
+
+	if (result) {
+
+		$('#myTableRow_'+index).remove();
+
+	}
+
+}
+
+
+
+$(document).ready(function (e) {
+
+		
+
+	$("#manage_job_others").on('submit',(function(e) {
+
+		e.preventDefault();
+		//alert('i am here');
+		tab = 8;
+
+		var next_tab = parseInt(tab) + 1;
+		//alert(user_id);
+		var post_url = window.location.protocol + "//" + window.location.host + "/";
+		
+		var process = 1;
+		var number_post = $('#number_post').val();
+		var age = $('#age').val();
+		
+		if(Math.floor(number_post) == number_post && $.isNumeric(number_post)) 
+		{
+			// integer val	
+		}
+		else
+		{
+			process = 0;
+			alert('Number of posts should be integer value');
+			$("#number_post").focus();
+			return false;
+		}
+		
+		if(Math.floor(age) == age && $.isNumeric(age)) 
+		{
+			// integer val	
+		}
+		else
+		{
+			process = 0;
+			alert('Age should be integer value');
+			$("#age").focus();
+			return false;
+		}
+		
+		if (process)
+
+		{
+
+			$('.save_error_others').hide();
+
+			//alert(eligibility);
+
+			$('#ajax_loading_others').show();
+
+			
+
+			$.ajax({
+
+				url: post_url+"post_job.php",   	// Url to which the request is send
+
+				type: "POST",      				// Type of request to be send, called as method
+
+				data:  new FormData(this), 		// Data sent to server, a set of key/value pairs representing form fields and values 
+
+				contentType: false,       		// The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
+
+				cache: false,					// To unable request pages to be cached
+
+				processData:false,  			// To send DOMDocument or non processed data file it is set to false (i.e. data should not be in the form of string)
+
+				success: function(data)  		// A function to be called if request succeeds
+
+				{
+
+					$('#ajax_loading_others').hide();
+
+					
+
+					var new_data = parseInt(data);
+
+					if (new_data == 0)
+
+					{
+
+						$('.save_error_others').show();
+
+					}
+
+					else
+
+					{
+
+							//alert(new_data);
+
+						$('.save_error_others').hide();
+
+						$('html,body').scrollTop(0);
+
+						if (!isNaN(new_data))
+						{
+							$('.record_id').val(new_data);
+						}
+						
+						show_tab(next_tab);
+
+					}
+
+				}	        
+
+		   });
+
+		}
+
+	}));
+
+	$("#job_qualification").on('submit',(function(e) {
+		e.preventDefault();
+		
+		var record_id = $('.record_id').val();	
+		var post_url = window.location.protocol + "//" + window.location.host + "/";
+		
+		if (record_id)
+		{
+			$('.save_error_qualification').hide();
+			//alert(eligibility);
+			$('#ajax_loading_qualification').show();
+			
+			$.ajax({
+
+				url: post_url+"save_job_qualification.php",   	// Url to which the request is send
+
+				type: "POST",      				// Type of request to be send, called as method
+
+				data:  new FormData(this), 		// Data sent to server, a set of key/value pairs representing form fields and values 
+
+				contentType: false,       		// The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
+
+				cache: false,					// To unable request pages to be cached
+
+				processData:false,  			// To send DOMDocument or non processed data file it is set to false (i.e. data should not be in the form of string)
+
+				success: function(data)  		// A function to be called if request succeeds
+				{
+					$('#ajax_loading_qualification').hide();
+					var new_data = parseInt(data);
+					if (new_data == 0)
+					{
+						$('.save_error_qualification').show();
+					}
+					else
+					{
+						//alert(new_data);
+						$('.save_error_qualification').hide();
+						//alert('else');
+						var newURL = window.location.protocol + "//" + window.location.host + "/phecadmins/admin.php?mod=managePostJobs";
+						//alert(newURL);
+						window.location = newURL;	
+					}
+				}	        
+		   });
+		}
+		else
+		{
+			alert('Save job description before qualification.');
+			return false;
+		}
+
+	}));
+
+// Function to preview image
+
+});

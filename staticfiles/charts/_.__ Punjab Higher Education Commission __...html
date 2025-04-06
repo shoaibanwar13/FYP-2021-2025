@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://honhaarscholarship.punjabhec.gov.pk/register.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+	<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+    <meta name="author" content="">
+    <link rel="icon" href="https://honhaarscholarship.punjabhec.gov.pk/favicon.ico">
+	<title>..:: Punjab Higher Education Commission ::..</title>
+	<!-- Bootstrap CSS -->
+    <link href="./_.__ Punjab Higher Education Commission __.._files/bootstrap.css" type="text/css" rel="stylesheet">
+	<!-- Font-Awesome CSS -->
+	<link href="./_.__ Punjab Higher Education Commission __.._files/font-awesome.css" type="text/css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Custom Styles -->
+    <link href="./_.__ Punjab Higher Education Commission __.._files/style.css" type="text/css" rel="stylesheet">
+    <link href="./_.__ Punjab Higher Education Commission __.._files/custom.css" type="text/css" rel="stylesheet">
+	<link href="./_.__ Punjab Higher Education Commission __.._files/jquery.mobile.datepicker.theme.css" type="text/css" rel="stylesheet">
+	<link href="./_.__ Punjab Higher Education Commission __.._files/jquery.mobile.datepicker.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="./_.__ Punjab Higher Education Commission __.._files/autocomplete.css">
+	<link rel="stylesheet" href="./_.__ Punjab Higher Education Commission __.._files/chosen.css">
+	<script src="./_.__ Punjab Higher Education Commission __.._files/jquery-1.12.4.js.download"></script>
+   <script src="./_.__ Punjab Higher Education Commission __.._files/jquery-ui.js.download"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/upload_file_ajax.js.download"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/save_job.js.download"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/select2.min.js.download" type="text/javascript"></script>
+    <link href="./_.__ Punjab Higher Education Commission __.._files/select2.min.css" rel="stylesheet" type="text/css">
+<style>
+
+
+
+	@media only screen and (max-width: 1199px)
+
+
+
+	{
+
+
+
+	.HedrRgt h2 { font-size:24px; }
+
+
+
+	.HedrRgt p { font-size:12px; }
+
+
+
+	}
+
+
+
+	@media only screen and (max-width: 991px)
+
+
+
+	{
+
+
+
+	.toggle-btn { display:block; float:right; margin:29px 15px 0 0; cursor:pointer;}
+
+
+
+	}
+
+ blink {
+        animation: blinker 5s linear infinite;
+       
+       }
+      @keyframes blinker {  
+        50% { opacity: 0; }
+       }
+       .blink-one {
+         animation: blinker-one 5s linear infinite;
+       }
+       @keyframes blinker-one {  
+         0% { opacity: 0; }
+       }
+       .blink-two {
+         animation: blinker-two 5s linear infinite;
+       }
+       @keyframes blinker-two {  
+         100% { opacity: 0; }
+       }
+
+</style></head>
+
+
+
+
+
+
+
+<body>
+	<header class="Header">
+        <div class="Logo">
+            <!--<a href="/"><img src="images/logo.jpg" alt="" /></a> -->
+			<a href="https://honhaarscholarship.punjabhec.gov.pk/"><img src="./_.__ Punjab Higher Education Commission __.._files/hed_logo.png" alt="" style="max-width:330px;"></a>
+        </div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <!--<div class="HedrRgt">
+            <h2>Punjab Higher Education Commission</h2>
+            <p>Promoting research, strengthening academia &amp; industry linkages, advancing support &amp; reforms  in universities &amp; colleges</p>
+        </div>-->
+		<div class="HdrMenuNew">
+        	
+			<ul>
+				            						<li><a href="https://honhaarscholarship.punjabhec.gov.pk/">Home</a></li>
+					<li> <a href="https://honhaarscholarship.punjabhec.gov.pk/#eligibility" class="nav-link ">Eligibility</a></li>
+					<li class="nav-item ">
+                        <a href="https://honhaarscholarship.punjabhec.gov.pk/discipline.php" class="nav-link ">Discipline</a>
+                    </li>
+                    <li class="nav-item ">
+                       <a href="https://honhaarscholarship.punjabhec.gov.pk/universities.php" class="nav-link">Institutes</a>
+                    </li>
+					<li class="nav-item ">
+                       <a href="https://honhaarscholarship.punjabhec.gov.pk/faqs.php" class="nav-link">FAQs</a>
+                    </li>
+					<li><a class="btn-success-new" href="https://honhaarscholarship.punjabhec.gov.pk/signin.php">Login</a></li>
+				
+
+
+				
+
+
+
+            </ul>
+
+
+
+        </div>
+
+
+
+    </header>
+ <script language="javascript">
+
+	$(document).ready(function(){
+
+		
+
+		$("#register_Form").submit(function(){
+
+			$("#pass_confirm").hide();
+
+			$("#character_length").hide();
+
+			$("#number_letter").hide();
+
+			var cusrpass = $( "#cusrpass").val();
+
+			var cusrcnfrmpass = $( "#cusrcnfrmpass").val();
+
+			if (cusrpass != cusrcnfrmpass)
+
+			{
+
+				$("#pass_confirm").show();
+
+				return false;
+
+			}
+
+			else{
+
+				$("#pass_confirm").hide();
+
+			}
+
+			
+
+			var n = parseInt(cusrpass.length);
+
+			if (n < 6)
+
+			{
+
+				$("#character_length").show();
+
+				return false;
+
+			}
+
+			else
+
+			{
+
+				$("#character_length").hide();
+
+			}
+
+			
+
+			if (/\d/.test(cusrpass) && /[a-zA-Z]/.test(cusrpass)) 
+
+			{
+
+				$("#number_letter").hide();
+
+			}
+
+			else
+
+			{
+
+				$("#number_letter").show();
+
+				return false;
+
+			}
+
+			
+
+			//return false;
+
+		});	
+
+		$("#cusrnme").blur(function(){
+
+    	
+
+			  $("#pexist").hide();
+
+			  document.getElementById('ajax_loading').style.display='inline-block';
+
+			  
+
+			  
+
+			  var username = $( "#cusrnme").val();
+
+			  
+
+			  if (username)
+
+			  {
+
+				  var new_username = username.replace(/[^0-9]/g, "");
+				  $( "#cusrnme").val(new_username);
+				  
+				  $.ajax({
+
+						  type: "POST",
+
+						  url: "username.php",
+
+						  data: "username="+ new_username,
+
+						  success: function(data){
+
+							  if (data == 1)
+
+									{
+
+										$("#ajax_loading").hide();
+
+										$("#pexist").show();
+
+										$('input[type="submit"]').attr('disabled','disabled');
+
+									}
+
+									else
+
+									{
+
+										$("#ajax_loading").hide();
+
+										$("#pexist").hide();
+
+										$('input[type="submit"]').removeAttr('disabled');
+
+									}
+
+						  }
+
+					  });
+
+			  }
+
+			   else
+
+			  {
+
+				 $("#ajax_loading").hide();	  
+
+			  }
+
+			  return false;
+
+			
+
+		});
+
+		$("#cusremail").blur(function(){
+
+    	
+
+			  $("#email_pexist").hide();
+
+			  document.getElementById('email_ajax_loading').style.display='inline-block';
+
+			  
+
+			  
+
+			  var email = $( "#cusremail").val();
+
+			  
+
+			  if (email)
+
+			  {
+
+				  $.ajax({
+
+						  type: "POST",
+
+						  url: "email.php",
+
+						  data: "email="+ email,
+
+						  success: function(data){
+
+							  if (data == 1)
+
+									{
+
+										$("#email_ajax_loading").hide();
+
+										$("#email_pexist").show();
+
+										$('input[type="submit"]').attr('disabled','disabled');
+
+									}
+
+									else
+
+									{
+
+										$("#email_ajax_loading").hide();
+
+										$("#email_pexist").hide();
+
+										$('input[type="submit"]').removeAttr('disabled');
+
+									}
+
+						  }
+
+					  });
+
+			  }
+
+			   else
+
+			  {
+
+				 $("#email_ajax_loading").hide();	  
+
+			  }
+
+			  return false;
+
+			
+
+		});
+
+	});
+
+ </script>
+
+ <section class="SignUpSec">
+
+    	<div class="container">
+
+            <div class="SignUpForm">
+				
+                                <p style="outline:none;font-size: 16px;text-align: left;width:775px;">Thank you for registering. Please remember your username and password below.<br><br> Your Username:  <strong>3510193791270</strong> and password: <strong>atiya@123</strong> <br><br>An email is also sent.<br><br><a href="https://honhaarscholarship.punjabhec.gov.pk/signin.php">Click here</a> to apply for Honhaar Scholarship</p>
+				
+
+            </div>
+
+        </div>
+
+    </section>
+
+ <footer class="Footer" style="bottom:0;position:fixed;">
+    	<div class="container">
+    		<p>© 2025 Punjab Higher Education Commission, Government of the Punjab.</p>
+        </div>
+    </footer>
+    <!-- Bootstrap JavaScript -->
+    <!-- Bootstrap JavaScript-->
+   <!-- <script src="js/jquery.2.0.3.min.js" type="text/javascript"></script>-->
+    		<script src="./_.__ Punjab Higher Education Commission __.._files/bootstrap.min.js.download" type="text/javascript"></script>
+        
+    <script src="./_.__ Punjab Higher Education Commission __.._files/jquery.accordion.js.download" type="text/javascript"></script>
+    <script src="./_.__ Punjab Higher Education Commission __.._files/jquery.validate.js.download"></script>
+	 		<script src="./_.__ Punjab Higher Education Commission __.._files/datepicker.js.download"></script>
+             
+	<script src="./_.__ Punjab Higher Education Commission __.._files/save_itg_data.js.download"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/save_profile_data.js.download"></script>
+    <script src="./_.__ Punjab Higher Education Commission __.._files/manage_job.js.download"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/year-select.js.download"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/chosen.jquery.js.download" type="text/javascript"></script>
+	<script src="./_.__ Punjab Higher Education Commission __.._files/init.js.download" type="text/javascript" charset="utf-8"></script>
+    <script>
+		$(document).ready(function() {
+			// validate the comment form when it is submitted
+			/*$("#commentForm").validate();*/
+			$('.yearselect').yearselect();
+			
+						 $("#fst_uni").select2();
+			 $("#sec_uni").select2();
+			            // Read selected option
+           /* $('#but_read').click(function(){
+                var username = $('#selUser option:selected').text();
+                var userid = $('#selUser').val();
+           
+                $('#result').html("id : " + userid + ", name : " + username);
+            });*/
+			
+		});
+	
+		/* off-canvas sidebar toggle */
+		$('.ToogleClass').click(function() {
+			$('body').toggleClass('open');
+			//$('.collapse').toggleClass('in');
+		});
+		$( ".toggle-btn" ).click(function() {
+			$( ".HdrMenuNew" ).slideToggle( "slow", function() {
+				// Animation complete.
+			});
+		});
+		
+		/*jQuery(document).ready(function(){
+			var wh = $(window).height();
+			jQuery('.wh').css('height', wh-75 +'px');
+		});	*/
+	
+		// placing objects inside variables
+		var sidebar = $('.nav-side-menu');
+		var content = $('#main');
+		
+		// get content and sidebar height in variables
+		var getContentHeight = content.outerHeight();
+		var getSidebarHeight = sidebar.outerHeight();
+		
+		// check if content height is bigger than sidebar
+		if ( getContentHeight > getSidebarHeight ) {
+			sidebar.css('min-height', getContentHeight);
+		}
+		
+		// check if sidebar height is bigger than content
+		if ( getSidebarHeight > getContentHeight ) {
+			content.css('min-height', getSidebarHeight);
+		}
+	
+		
+    </script>
+    <script>
+		$("#addqlification").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			
+			var counter =  parseInt($("#counter_qlification").val());
+			counter = counter + 1;
+			$("#counter_qlification").val(counter);
+			
+  $("#qualification_area table").append('<tr id="qlificationRow_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_qlification('+counter+');" ></td><td style="text-align:center;vertical-align:top;"><div class="select-style"><select id="quailfication_id_'+counter+'" name="quailfication_id[]" title="Please select"><option value="">Select...</option></select></div></td><td style="vertical-align:top;"><input type="text" id="search-box_'+counter+'" onkeyup="auto_complete_job_fields('+counter+',this);" value="" placeholder="Please Specify" style="width:250px;"><div id="suggesstion-box_'+counter+'"></div><input type="hidden" id="major_fields_id_'+counter+'" name="major_fields_id[]" value="" /></td><td style="vertical-align:top;"><div class="select-style"><select id="complete_year_'+counter+'" name="complete_year[]" title="Please select"><option value="">Select</option></select></div></td></tr>'); 
+			
+			var tbl = 'qualification';
+			$("#ajax_loading_edu").show();
+			
+			
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_qualifications.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  
+					  $("#quailfication_id_"+counter).append(html);
+				  }
+			});  
+			var tbl = 'years';
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_req_experience.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#ajax_loading_edu").hide();
+					  $("#complete_year_"+counter).append(html);
+				  }
+			});  
+			
+		});
+		$("#addstudyplan").click(function () 
+		{
+			
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter =  parseInt($("#counter_studyplan").val());
+			counter = counter + 1;
+			$("#counter_studyplan").val(counter);
+			
+			$("#study_area table").append('<tr id="studyplanRow_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_studyplan_row('+counter+');" ></td><td><input id="plan_date_'+counter+'" name="plan_date[]" type="text" class="date-input-css" value="" placeholder="Specify Date" ></td><td style="text-align:center;" colspan="2"><input type="text" id="planned_activity_'+counter+'" name="planned_activity[]" value="" class="txt_planned_text" /></td><td><input type="text" id="activity_days_'+counter+'" name="activity_days[]" value="" class="txt_width" /></td></tr>'); 
+			
+			$( ".date-input-css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true,
+			   yearRange: "1940:2030",
+			   showButtonPanel: true
+			});
+		});
+		$("#addexp").click(function () 
+		{
+			
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter =  parseInt($("#counter_exp").val());
+			counter = counter + 1;
+			$("#counter_exp").val(counter);
+			
+			$("#experience_area table").append('<tr id="experienceRow_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_experience_row('+counter+');" ></td><td style="text-align:center;"><input type="text" id="company_name_'+counter+'" name="company_name[]" value="" class="txt_width" /></td><td><input type="text" id="position_title_'+counter+'" name="position_title[]" value="" class="txt_width" /></td><td><input type="text" id="department_'+counter+'" name="department[]" value="" class="txt_width" /></td><td><div class="select-style"><select id="job_type_id_'+counter+'" name="job_type_id[]" title="Please select" class="txt_width" ><option value="">Select...</option></select></div></td><td><div class="select-style"><select id="payscale_id_'+counter+'" name="payscale_id[]" title="Please select" class="txt_width" ><option value="">Select...</option></select></div></td><td><input id="job_start_date_'+counter+'" name="job_start_date[]" type="text" class="date-input-css" value="" placeholder="Specify Start Date" ></td><td><input type="checkbox" id="currently_working_'+counter+'" name="currently_working[]"></td><td><input id="job_end_date_'+counter+'" name="job_end_date[]" type="text" class="date-input-css" value="" placeholder="Specify End Date" ></td></tr>'); 
+			
+			$( ".date-input-css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true,
+			   yearRange: "1940:2030",
+			   showButtonPanel: true
+			});
+			
+			var tbl = 'job_type';
+			$("#ajax_loading_exp").show();
+			
+			
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_job_type.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#job_type_id_"+counter).append(html);
+				  }
+			}); 
+			
+			var tbl = 'payscale';
+			$("#ajax_loading_exp").show();
+			
+			
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_job_type.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#ajax_loading_exp").hide();
+					  $("#payscale_id_"+counter).append(html);
+				  }
+			}); 
+			
+		});
+		$("#addedu").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			
+			var counter =  parseInt($("#counter_edu").val());
+			counter = counter + 1;
+			$("#counter_edu").val(counter);
+  $("#education_area table").append('<tr id="myTableRow_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_row('+counter+');" ></td><td style="text-align:center;"><div class="select-style"><select id="quailfication_id_'+counter+'" name="quailfication_id[]" title="Please select" class="txt_width" onchange="load_programs('+counter+');"><option value="">Select...</option> </select></div></td><td><div class="select-style"><select id="program_title_'+counter+'" name="program_title[]" title="Please select" class="txt_width" onchange="check_program('+counter+');"></select></div><input type="text" id="program_text_'+counter+'" name="program_text[]" value="" class="program_txt" style="display:none;" /></td><td><div class="select-style"><select id="institute_'+counter+'" name="institute[]" title="Please select" class="txt_width" onchange="check_institute('+counter+');"></select></div><input type="text" id="institute_text_'+counter+'" name="institute_text[]" value="" class="program_txt" style="display:none;" /></td><td><div class="select-style"><select id="postdoc_discipline_id_'+counter+'" name="postdoc_discipline_id[]" title="Please select" class="txt_width"></select></div></td><td><input type="text" id="obtained_marks_'+counter+'" name="obtained_marks[]" value="" class="number_decimal" /></td><td><input type="text" id="total_marks_'+counter+'" name="total_marks[]" value="" class="number_only" /></td></td><td><input id="degree_complete_date_'+counter+'" name="degree_complete_date[]" type="text" class="date-input-css" value="" placeholder="Specify Completion Date" ></td><td class="major_subject"><input type="text" id="major_subjects_'+counter+'" name="major_subjects[]" value="" /></td> </tr>'); 
+			
+			$('.number_only').keypress(function(event) {
+	
+			  if ((event.which < 48 || event.which > 57)) {
+		
+				event.preventDefault();
+		
+			  }
+		
+			});
+			$('.number_decimal').keypress(function(event) {
+		
+			  if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+		
+				event.preventDefault();
+		
+			  }
+		
+			});
+			
+			$( ".date-input-css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true,
+			   yearRange: "1970:2025"
+			});		
+			var tbl = 'qualification';
+			$("#ajax_loading_edu").show();
+			
+			
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_qualifications.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#quailfication_id_"+counter).append(html);
+					   
+				  }
+			});  
+			var tbl = 'postdoc_discipline';
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_disciplines.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#ajax_loading_edu").hide();
+					  $("#postdoc_discipline_id_"+counter).append(html);
+				  }
+			});  
+			/*var tbl = 'years';
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_years.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#ajax_loading_edu").hide();
+					  $("#complete_year_"+counter).append(html);
+				  }
+			});  */
+			
+		});
+		$("#somebutton").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter =  parseInt($("#counter").val());
+			counter = counter + 1;
+			$("#counter").val(counter);
+  $("#international_area table").append('<tr id="internationpub_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_international_pub('+counter+');" ></td><td><div class="select-style"><select id="publication_year_'+counter+'" name="publication_year[]" title="Please Select" onChange="publication_check_year('+counter+');"></select></div></td><td><input type="text" id="search-box_'+counter+'" onkeyup="auto_complete_text('+counter+',this);" value="" placeholder="Enter ISSN" autocomplete="off" disabled><div id="suggesstion-box_'+counter+'"></div><input type="hidden" id="issn_id_international_'+counter+'" name="issn_international_id[]" /></td><td><input type="text" id="international_title_'+counter+'" name="international_title[]" value="" placeholder="Please Specify" /></td><td><input type="text" id="published_international_'+counter+'" name="published_international[]" value=""  disabled /></td><td><input id="publish_date_international_'+counter+'" name="publish_date_international[]" type="text" class="date-input-css" placeholder="Select Date" value=""></td><td><input id="international_impact_'+counter+'" name="international_impact_factor[]" placeholder="Impact Factor" type="text" value="" disabled ></td><td><input id="url_international_'+counter+'" name="url_international[]" type="text" placeholder="http://" value=""></td></tr>'); 
+			  
+			$( ".date-input-css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true,
+			   yearRange: "2014:2030"
+			});						
+			$("#ajax_loading_pub").show();			
+			var post_url = window.location.protocol + "//" + window.location.host + "/";						
+			var tbl = 'publication_year';			
+			
+			$.ajax({				  
+				type: "POST",				  
+				url: post_url+"loadpubyear.php",				  
+				data: "tbl="+ tbl,				  
+				success: function(html)
+				{					  
+					$("#ajax_loading_pub").hide();					  
+					$("#publication_year_"+counter).append(html);				  
+				}			
+			});   
+		});
+		$("#somebutton_book").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter =  parseInt($("#counter_book").val());
+			counter = counter + 1;
+			$("#counter_book").val(counter);
+			
+  $("#book_area table").append('<tr id="bookauthored_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_book_authored('+counter+');" ></td><td><input type="text" id="book_title_'+counter+'" name="book_title[]" placeholder="Please Specify" value="" /></td><td><input type="text" id="author_'+counter+'" name="author[]" value="" placeholder="Please Specify" /></td><td><input id="publisher_'+counter+'" name="publisher[]" type="text" value="" placeholder="Please Specify"></td><td><input id="publication_place_'+counter+'" name="publication_place[]" type="text" value="" placeholder="Please Specify"></td><td><div class="select-style"><select id="date_publication_'+counter+'" name="date_publication[]" title="Please Select"></select></div></td></tr>'); 
+			
+			  
+			$("#ajax_loading_book").show();			
+			var post_url = window.location.protocol + "//" + window.location.host + "/";						
+			var tbl = 'book_publication_year';			
+			
+			$.ajax({				  
+				type: "POST",				  
+				url: post_url+"loadbookyear.php",				  
+				data: "tbl="+ tbl,				  
+				success: function(html)
+				{					  
+					 $("#ajax_loading_book").hide();
+					$("#date_publication_"+counter).append(html);				  
+				}			
+			});  
+			
+		});
+		
+		$("#somebutton_conference_paper").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter =  parseInt($("#counter_conference_paper").val());
+			counter = counter + 1;
+			$("#counter_conference_paper").val(counter);
+			
+  $("#conference_paper_area table").append('<tr id="conferencepaper_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_conference_paper('+counter+');" ></td><td><div class="select-style"><select id="paper_publication_year_'+counter+'" name="paper_publication_year[]" title="Please Select"></select></div></td><td><input type="text" id="paper_issn_'+counter+'" name="paper_issn[]" placeholder="Please Specify" value="" /></td><td><input type="text" id="paper_title_'+counter+'" name="paper_title[]" value="" placeholder="Please Specify" /></td><td><input id="conference_name_'+counter+'" name="conference_name[]" type="text" value="" placeholder="Please Specify"></td><td><input id="conference_venue_'+counter+'" name="conference_venue[]" type="text" value="" placeholder="Please Specify"></td><td><input id="conference_date_'+counter+'" name="conference_date[]" type="text" value="" placeholder="Please Specify"></td><td><div class="select-style"><select id="conference_category_'+counter+'" name="conference_category[]" title="Please Specify"><option value="">Select</option></select></div></td></tr>'); 
+			
+			
+			$("#ajax_loading_cpaper").show();			
+			var post_url = window.location.protocol + "//" + window.location.host + "/";						
+			var tbl = 'publication_year';			
+			
+			$.ajax({				  
+				type: "POST",				  
+				url: post_url+"loadpubyear.php",				  
+				data: "tbl="+ tbl,				  
+				success: function(html)
+				{					  
+					$("#paper_publication_year_"+counter).append(html);				  
+				}			
+			});  
+			
+			var tbl = 'conference_category';
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_localcategory.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					   $("#ajax_loading_cpaper").hide();
+					  $("#conference_category_"+counter).append(html);
+				  }
+			});    
+			
+		});
+		
+		$("#somebutton_local").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter =  parseInt($("#counter_local").val());
+			counter = counter + 1;
+			$("#counter_local").val(counter);
+			
+  $("#local_area table").append('<tr id="localpub_'+counter+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_local_pub('+counter+');" ></td><td><input type="text" id="local_title_'+counter+'" name="local_title[]" placeholder="Please Specify" value="" /></td><td><input type="text" id="published_local_'+counter+'" name="published_local[]" value="" /></td><td><div class="select-style"><select id="category_'+counter+'" name="category[]" title="Please Specify"><option value="">Select</option></select></div></td><td><input id="publish_date_local_'+counter+'" name="publish_date_local[]" type="text" class="date-input-css" placeholder="Select Date" value=""></td><td><input id="url_local_'+counter+'" name="url_local[]" type="text" value="" placeholder="http://"></td></tr>'); 
+			
+			  
+			$( ".date-input-css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true
+			});
+			
+			$("#ajax_loading_local").show();
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			
+			var tbl = 'localcategory';
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_localcategory.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					   $("#ajax_loading_local").hide();
+					  $("#category_"+counter).append(html);
+				  }
+			});   
+		});
+		$("#somebutton_1").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter_1 =  parseInt($("#counter_1").val());
+			counter_1 = counter_1 + 1;
+			
+			$("#counter_1").val(counter_1);
+  $("#family_div table").append('<tr id="prev_particip_'+counter_1+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_prev_paticip('+counter_1+');" ></td><td><input type="text" id="member_name_'+counter_1+'" name="member_name[]" value="" placeholder="Please Specify" maxlength="30" class="txtOnly" /></td><td><input type="text" id="member_relationship_'+counter_1+'" name="member_relationship[]" value="" placeholder="Please Specify" maxlength="20" class="txtOnly" /></td><td><input type="text" id="member_occuption_'+counter_1+'" name="member_occuption[]" value="" placeholder="Please Specify" maxlength="40" class="txtOnly" /></td><td><input type="text" id="member_organization_'+counter_1+'" name="member_organization[]" value="" placeholder="Please Specify" maxlength="40" class="txtOnly" /></td><td><input type="text" id="member_designation_'+counter_1+'" name="member_designation[]" value="" placeholder="Please Specify" maxlength="40" class="txtOnly" /></td><td><input type="text" id="member_earning_'+counter_1+'" name="member_earning[]" value="" placeholder="Please Specify" maxlength="20" class="number_only" /></td></tr>');
+  			
+			 $(".txtOnly").on('input', function(event) {
+			  this.value = this.value.replace(/[^a-z\s]/gi, '');
+			});
+			$('.number_only').keypress(function(event) {
+			  if ((event.which < 48 || event.which > 57)) {
+				event.preventDefault();
+			  }
+			});
+		});
+		$("#somebutton_transport").click(function () 
+		{
+			var post_url = window.location.protocol + "//" + window.location.host + "/";
+			var counter_1 =  parseInt($("#counter_transport").val());
+			counter_1 = counter_1 + 1;
+			
+			$("#counter_transport").val(counter_1);
+  $("#conference_div table").append('<tr id="prev_transport_'+counter_1+'"><td class="cross"><img src="'+post_url+'images/cross.png" width="25" height="25" onClick="remove_prev_transport('+counter_1+');" ></td><td style="text-align:center;vertical-align:top;"><div class="select-style"><select id="transport_type_'+counter_1+'" name="transport_type[]" title="Please select"><option value="">Select...</option></select></div></td><td><input type="text" id="transport_model_'+counter_1+'" name="transport_model[]" value="" placeholder="Please Specify" maxlength="20" class="number_only" /></td><td><input type="text" id="transport_engine_'+counter_1+'" name="transport_engine[]" value="" placeholder="Please Specify" maxlength="20" class="number_only" /></td><td><input type="text" id="transport_registration_'+counter_1+'" name="transport_registration[]" value="" placeholder="Please Specify" maxlength="30" /></td><td><input type="text" id="transport_ownership_'+counter_1+'" name="transport_ownership[]" value="" placeholder="Please Specify" maxlength="20" /></td></tr>');
+  			
+			$('.number_only').keypress(function(event) {
+	
+			  if ((event.which < 48 || event.which > 57)) {
+		
+				event.preventDefault();
+		
+			  }
+		
+			});
+			var tbl = 'transport_type';
+			$("#ajax_loading_transport").show();
+			
+			
+			$.ajax({
+				  type: "POST",
+				  url: post_url+"load_transporttype.php",
+				  data: "tbl="+ tbl,
+				  success: function(html){
+					  $("#ajax_loading_transport").hide();
+					  $("#transport_type_"+counter_1).append(html);
+				  }
+			});  
+		});
+		jQuery(document).ready(function(){
+			$.datepicker._gotoToday = function(id) {
+				var target = $(id);
+				var inst = this._getInst(target[0]);
+	
+				var date = new Date();
+				this._setDate(inst,date);
+				this._hideDatepicker();
+				
+			}
+			
+			$( ".date-input-css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true,
+			   yearRange: "1940:2030",
+			   showButtonPanel: true
+			});
+			
+			$( ".date_input_css" ).datepicker({
+			   changeMonth: true,
+			   changeYear: true,
+			   yearRange: "2014:2030"
+			});
+			jQuery('ul.tabs li').click(function(){
+				var tab_id = jQuery(this).attr('data-tab');
+		
+				jQuery('ul.tabs li').removeClass('current');
+				jQuery('.tab-content').removeClass('current');
+		
+				jQuery(this).addClass('current');
+				jQuery("#"+tab_id).addClass('current');
+			});
+			/*jQuery('#consent_letter').click(function(){
+				$("#upload_file").show();
+			});
+			jQuery('#consent_letter_1').click(function(){
+				$("#upload_file").hide();
+			});*/
+			jQuery('#curently_working').click(function(){
+				$("#working_div").show();
+			});
+			jQuery('#curently_working_1').click(function(){
+				$("#working_div").hide();
+			});
+			
+			jQuery('#previous_participation').click(function(){
+				$("#conference_div").show();
+			});
+			jQuery('#previous_participation_1').click(function(){
+				$("#conference_div").hide();
+			});
+			jQuery('a#save_form').click(function(){
+				$("#profileForm").submit();
+			});
+			jQuery('a#save_itg_form').click(function(){
+				$("#itgForm").submit();
+			});
+			jQuery('#travel_cost_pkr, #register_cost_pkr, #accomodation_cost_pkr, #daily_cost_pkr').blur(function(){
+				var total = 0.00;
+				var travel_cost_pkr =  parseFloat($("#travel_cost_pkr").val());
+				if (travel_cost_pkr)
+				{
+					total = total + travel_cost_pkr;
+				}
+				var register_cost_pkr =  parseFloat($("#register_cost_pkr").val());
+				if (register_cost_pkr)
+				{
+					total = total + register_cost_pkr;
+				}
+				var accomodation_cost_pkr =  parseFloat($("#accomodation_cost_pkr").val());
+				if (accomodation_cost_pkr)
+				{
+					total = total + accomodation_cost_pkr;
+				}
+				var daily_cost_pkr =  parseFloat($("#daily_cost_pkr").val());
+				if (daily_cost_pkr)
+				{
+					total = total + daily_cost_pkr;
+				}
+				if (total > 0)
+				{
+					$("#total_cost_pkr").val(total.toFixed(2));
+				}
+				else
+				{
+					$("#total_cost_pkr").val("");
+				}
+			});
+			jQuery('#travel_cost_usd, #register_cost_usd, #accomodation_cost_usd, #daily_cost_usd').blur(function(){
+				var total = 0.00;
+				var travel_cost_usd =  parseFloat($("#travel_cost_usd").val());
+				if (travel_cost_usd)
+				{
+					total = total + travel_cost_usd;
+				}
+				var register_cost_usd =  parseFloat($("#register_cost_usd").val());
+				if (register_cost_usd)
+				{
+					total = total + register_cost_usd;
+				}
+				var accomodation_cost_usd =  parseFloat($("#accomodation_cost_usd").val());
+				if (accomodation_cost_usd)
+				{
+					total = total + accomodation_cost_usd;
+				}
+				var daily_cost_usd =  parseFloat($("#daily_cost_usd").val());
+				if (daily_cost_usd)
+				{
+					total = total + daily_cost_usd;
+				}
+				if (total > 0)
+				{
+					$("#total_cost_usd").val(total.toFixed(2));
+				}
+				else
+				{
+					$("#total_cost_usd").val("");
+				}
+			});
+				
+		});
+		function show_tab(tabnum)
+		{
+			//alert(tabnum);
+			$( "ul li.tab-link" ).removeClass( "current" );
+			$( "ul li a.tab_link" ).removeClass( "current" );
+			$( "ul li a.tab_link" ).removeClass( "default-tab" );
+			$( "div.tab-content" ).removeClass( "current" );
+			$( "div.tab-content" ).removeClass( "default-tab" );
+			$( "div.admintab" ).hide();
+				
+			//alert('i am here');
+			$( "#tab_"+tabnum ).addClass( "current" );
+			$( "div#tab-"+tabnum ).addClass( "current" );
+			
+			$( "#tab_"+tabnum ).addClass( "default-tab" );
+			$( "div#tab-"+tabnum ).addClass( "default-tab" );
+			$( "div#tab-"+tabnum ).attr("style", "");
+			
+		}
+		function check_field_empty(list_vars, tab)
+		{
+			for (i = 0; i < list_vars.length; i++) {
+				var new_item =  $("#"+list_vars[i]).val();
+				if (!new_item)
+				{
+					show_tab(tab);	
+					$("#"+list_vars[i]).focus();
+					$("#"+list_vars[i]).addClass( "border_2" );
+					return false;
+				}
+				else
+				{
+					$("#"+list_vars[i]).removeClass( "border_2" );		
+				}
+			}
+			return true;
+		}
+		function check_me()
+		{
+			
+			var list_vars_1 = ["ctitle", "first_name", "last_name", "father_guardian_name", "dob", "gender_id", "residence_phone", "mobile", "nationality_id", "cnic"];
+			
+			var ret_val = check_field_empty(list_vars_1, 1);
+			if (!ret_val)
+			{
+				return false;
+			}
+			var list_vars_2 = ["permanent_province", "permanent_district", "permanent_city", "permanent_address"];
+			var list_vars_3 = ["permanent_abroad_province", "permanent_abroad_district", "permanent_abroad_city", "permanent_address"];
+			
+			var list_vars_6 = ["quailfication_id", "field_study"];
+			
+			var per_cid = $( "select#permanent_country option:selected").val();
+			if (per_cid == 167) //  if country is pak then check drop down
+			{
+				var ret_val = check_field_empty(list_vars_2, 2);
+				if (!ret_val)
+				{
+					return false;
+				}
+			}
+			else // if country is not pak... then check text fields
+			{
+				var ret_val = check_field_empty(list_vars_3, 2);
+				if (!ret_val)
+				{
+					return false;
+				}
+			}
+			
+			var ret_val = check_field_empty(list_vars_6, 3);
+			if (!ret_val)
+			{
+				return false;
+			}
+		}
+	</script>
+	    
+
+
+</body></html>
