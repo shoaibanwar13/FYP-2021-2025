@@ -13,3 +13,4 @@ cloudinary
 django-cloudinary-storage
 gunicorn
 pandas
+plotly
