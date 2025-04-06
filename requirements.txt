@@ -12,3 +12,4 @@ django-bootstrap5
 cloudinary
 django-cloudinary-storage
 gunicorn
+pandas

@@ -1,12 +1,11 @@
 
 from django.urls import path
-from analysis.views import * #mean all you write only name in path
+from analysis.views import *  
 from django.contrib.auth import views
 
 urlpatterns = [
-    #url mapping
+  
     path('',index,name='index'), 
-     
     path('sentimental_analysis/',sentimental_analysis,name='sentimental_analysis'),
     path('user_history/',user_history,name='user_history'),
     path('features/',features,name='features'),
