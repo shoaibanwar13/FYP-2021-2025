@@ -373,7 +373,7 @@ import numpy as np
 import plotly.io as pio
 def Analytics_Dashboard(request):
     user = request.user
-    data = Analysis.objects.filter(user=user).latest('uploaded_at')
+    data = Analysis.objects.filter(user=user).first()
     if data.unique_tags.name.endswith(".csv"):
             df = pd.read_csv(data.unique_tags,header=None)
     elif data.unique_tags.name.endswith(".xlsx"):
