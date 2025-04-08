@@ -267,6 +267,7 @@ def upload_files(request):
         file4 = request.FILES.get("file4")   
         column_name = request.POST.get("column_name")
         num_topics = request.POST.get("num_topics")
+        print(num_topics,"==============")
 
         if file1 and file2 and file4:
             try:
@@ -282,7 +283,7 @@ def upload_files(request):
                 }
 
                 
-                response = requests.post("http://127.0.0.1:8000/upload/", files=files, data=data)
+                response = requests.post("https://dependent-marci-softapex-technologies-debd9874.koyeb.app/upload/", files=files, data=data)
                 fastapi_data = response.json()
 
                
@@ -373,7 +374,7 @@ import numpy as np
 import plotly.io as pio
 def Analytics_Dashboard(request):
     user = request.user
-    data = Analysis.objects.filter(user=user).latest('uploaded_at')
+    data = Analysis.objects.filter(user=user).first()
     if data.unique_tags.name.endswith(".csv"):
             df = pd.read_csv(data.unique_tags,header=None)
     elif data.unique_tags.name.endswith(".xlsx"):

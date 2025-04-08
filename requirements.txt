@@ -14,3 +14,4 @@ django-cloudinary-storage
 gunicorn
 pandas
 plotly
+openpyxl
