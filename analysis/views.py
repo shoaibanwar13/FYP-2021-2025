@@ -281,9 +281,9 @@ def upload_files(request):
                     "column_name": column_name,
                     "num_topics": num_topics,
                 }
-
+             
                 
-                response = requests.post("https://dependent-marci-softapex-technologies-debd9874.koyeb.app/upload/", files=files, data=data)
+                response = requests.post("http://127.0.0.1:8000/upload/", files=files, data=data)
                 fastapi_data = response.json()
 
                
@@ -300,6 +300,8 @@ def upload_files(request):
                 difficulty_of_topics=pd.DataFrame(fastapi_data.get("difficulty of topics",[]))
                 trends_of_topics=pd.DataFrame(fastapi_data.get("trends_of_topics",[]))
                 question_analysis_with_percentages=pd.DataFrame(fastapi_data.get("question_analysis_with_percentages",[]))
+                coherence=fastapi_data.get("Coherence Score",[])
+                perpelixity=fastapi_data.get("Perplexity",[])
                 # Save DataFrames to in-memory Excel files
                 excel_buffer1 = BytesIO()
                 unique_tags_df.to_excel(excel_buffer1, index=False, engine="xlsxwriter")
@@ -353,7 +355,10 @@ def upload_files(request):
                 file_instance.difficulty_of_topics.save("difficulty_of_topics.xlsx",ContentFile(excel_buffer8.read()))
                 file_instance.trends_of_topics.save("trends_of_topics.xlsx", ContentFile(excel_buffer9.read()))
                 file_instance.question_analysis_with_percentages.save("question_analysis_with_percentages.xlsx",ContentFile(excel_buffer10.read()))
-
+                file_instance.coherence_score = coherence 
+                file_instance.save()
+                file_instance.perplexity=perpelixity
+                file_instance.save()
                 return redirect("analytics_dashboard")
                  
             except Exception as e:
@@ -375,6 +380,7 @@ import plotly.io as pio
 def Analytics_Dashboard(request):
     user = request.user
     data = Analysis.objects.filter(user=user).first()
+    
     if data.unique_tags.name.endswith(".csv"):
             df = pd.read_csv(data.unique_tags,header=None)
     elif data.unique_tags.name.endswith(".xlsx"):
@@ -620,13 +626,55 @@ def Analytics_Dashboard(request):
         margin=dict(t=50, b=150)
     )
     data_list_for_questions= df.to_dict(orient="records")
-    print("Debuges data",data_list_for_questions)
-    
     paginator_for_question_persentage = Paginator(data_list_for_questions, 20)  # Show 5 records per page
    
     page_number_for_questions  = request.GET.get("page")
     page_obj_for_questions  = paginator_for_question_persentage.get_page(page_number_for_questions)
+    
+    if data.total_recomendation.name.endswith(".csv"):
+            df = pd.read_csv(data.total_recomendation,header=None)
+    elif data.total_recomendation.name.endswith(".xlsx"):
+            df = pd.read_excel(data.total_recomendation, engine="openpyxl",header=None)
+    df.columns = df.iloc[0]  # Set the first row as column headers
+    df = df.drop(0)  # Drop the first row (now it's used as headers)
 
+    # Ensure that the data is numeric (convert string to integer)
+    df = df.apply(pd.to_numeric)
+    print(df)
+
+    # Add an index column for plotting
+    df['Index'] = df.index
+    bar_chart = px.bar(
+        df,
+        x='Index',
+        y=df.columns[:-1],
+        title="Comparison of Total Recommended vs Total Relevant",
+        labels={"Index": "Index", "value": "Count"},
+        barmode='group'  # Group bars for comparison
+    )
+
+    # Customize the layout for the bar chart
+    bar_chart.update_layout(
+        xaxis_title="Index",
+        yaxis_title="Count",
+        xaxis_tickangle=45,  # Rotate x-axis labels for better readability
+        autosize=False,
+        width=1000,
+        height=600,
+        margin=dict(t=50, b=150)
+    )
+
+    # Convert the plot to HTML for embedding in a Django template
+    
+
+    # Now we use Django's paginator for paginating data (if needed)
+    data_list_for_questions = df.to_dict(orient="records")
+
+    paginator_for_bar_chart = Paginator(data_list_for_questions, 5)  # Show 5 records per page
+    page_number_for_bar_chart = request.GET.get("page")
+    page_obj_for_bar_chart = paginator_for_bar_chart.get_page(page_number_for_bar_chart)
+    
+    
     significance_chart = fig1.to_html(full_html=False)
     relevance_chart = fig2.to_html(full_html=False)
     unique_post_chart=unique_post_fig.to_html(full_html=False)
@@ -634,6 +682,7 @@ def Analytics_Dashboard(request):
     difficulty_chart=difficulty_of_topics.to_html(full_html=False)
     topic_trends_chart_html= topic_trends_chart.to_html(full_html=False)
     question_persentage_chart=question_persentage.to_html(full_html=False)
+    bar_chart_html = bar_chart.to_html(full_html=False)
    
 
-    return render(request, "AnalyticalDashboard.html", {"significance_chart": significance_chart, "relevance_chart": relevance_chart,"data_page": data_page,"unique_post_chart":unique_post_chart,"page_obj":page_obj,"papularity_chart":papularity_chart,"page_obj_for_papularity":page_obj_for_papularity,"page_obj_for_difficulty": page_obj_for_difficulty,"difficulty_of_topics":difficulty_chart,"topic_trends_chart_html":topic_trends_chart_html,"question_persentage_chart":question_persentage_chart,"page_obj_for_questions":page_obj_for_questions })
+    return render(request, "AnalyticalDashboard.html", {"significance_chart": significance_chart, "relevance_chart": relevance_chart,"data_page": data_page,"unique_post_chart":unique_post_chart,"page_obj":page_obj,"papularity_chart":papularity_chart,"page_obj_for_papularity":page_obj_for_papularity,"page_obj_for_difficulty": page_obj_for_difficulty,"difficulty_of_topics":difficulty_chart,"topic_trends_chart_html":topic_trends_chart_html,"question_persentage_chart":question_persentage_chart,"page_obj_for_questions":page_obj_for_questions,'coherence_score':data.coherence_score,'perplexity':data.perplexity, 'page_obj_for_bar_chart': page_obj_for_bar_chart,'bar_chart_html':bar_chart_html  })

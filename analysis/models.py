@@ -121,6 +121,9 @@ class Analysis(models.Model):
     difficulty_of_topics=models.FileField(upload_to='analysis_files/',null=True)
     trends_of_topics=models.FileField(upload_to='analysis_files/',null=True)
     question_analysis_with_percentages=models.FileField(upload_to='analysis_files/',null=True)
+    coherence_score=models.DecimalField(max_digits=30,default=0,decimal_places=15)
+    perplexity=models.DecimalField(max_digits=30,default=0,decimal_places=15)
+    
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 

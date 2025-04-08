@@ -191,14 +191,14 @@
     <div class="row text-center mb-4">
         <div class="col-md-4 mb-4">
             <div class="metric-card topic-popularity">
-                <h3 id="topic-popularity">0%</h3>  
-                <p>Topic Popularity</p>
+                <h3 id="topic-popularity">{{coherence_score}}</h3>  
+                <p>Coherence Score</p>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="metric-card complexity-score">
-                <h3 id="complexity-score">0%</h3>
-                <p>Complexity Score</p>
+                <h3 id="complexity-score">{{perplexity}}</h3>
+                <p>Perplexity Score</p>
             </div>
         </div>
         <div class="col-md-4 mb-4">
@@ -423,11 +423,11 @@
                     </nav>
                     </div>
         </div>
-          <!-- <div class="col-md-12">
+          <div class="col-md-12">
             <div class="card">
-                <img src="{% static 'charts/absoluteimpact.png' %}" alt="absoluteimpact">
+                {{bar_chart_html|safe}}
             </div>
-        </div> -->
+        </div> 
     </div> 
  
     <!-- Row 5:  -->
