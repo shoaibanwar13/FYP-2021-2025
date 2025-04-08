@@ -106,6 +106,12 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
+.chart-container {
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;  /* prevents scrollbars */
+}
+
 /* Faster Shake Animation */
 @keyframes shakeButton {
     0%, 100% { transform: translateX(0); }
@@ -277,17 +283,21 @@
     
     <!-- Row 2:  -->
     <div class="row g-0">
-        <div  class="col-md-12" >
+        <div  class="col-md-12 chart-container" >
             {{ significance_chart|safe }}
+            {% comment %} <img src="{% static 'charts/absoluteimpact.png' %}" alt="Absolute Impact Chart"> {% endcomment %}
+
         </div>
-        <div class="col-md-12" >
+        <div class="col-md-12 chart-container" >
             <div >
                {{relevance_chart|safe}}
+               {% comment %} <img src="{% static 'charts/absoluteimpact.png' %}" alt="Absolute Impact Chart"> {% endcomment %}
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 chart-container">
                     <div>     
                         {{unique_post_chart|safe}}
+                        {% comment %} <img src="{% static 'charts/absoluteimpact.png' %}" alt="Absolute Impact Chart"> {% endcomment %}
                     </div>
         </div>
     </div>
@@ -494,27 +504,29 @@
 
                 </div>
             </div>   
-            <div class="col-md-12">
+            <div class="col-md-12 chart-container">
                 <div>
                    {{difficulty_of_topics|safe}}
+                   {% comment %} <img src="{% static 'charts/absoluteimpact.png' %}" alt="Absolute Impact Chart"> {% endcomment %}
                 </div>
             </div>
-            <div  class="col-md-12">
+            <div  class="col-md-12 chart-container">
                 <div  >
                      {{topic_trends_chart_html|safe}}
+                     {% comment %} <img src="{% static 'charts/absoluteimpact.png' %}" alt="Absolute Impact Chart"> {% endcomment %}
                 </div>
             </div>
     </div>
     <!-- Row 6 -->
  <div class="row g-0">
-    <div class="col-md-12">
-        <div class="card">
+    <div class="col-md-12 chart-container">
+        
             {{question_persentage_chart|safe}}
-        </div>
+            {% comment %} <img src="{% static 'charts/absoluteimpact.png' %}" alt="Absolute Impact Chart"> {% endcomment %}
+        
     </div>
     <div class="col-md-12">
-        <div class="card">  
-        </div>
+      
     </div>
  </div> 
 

@@ -439,9 +439,10 @@ def Analytics_Dashboard(request):
     fig1.update_layout(
         title_x=0.5, 
         xaxis_tickangle=-45, 
-        autosize=False, 
-        width=1000, 
-        height=600, 
+        autosize=True,
+        # autosize=False, 
+        # width=1000, 
+        # height=600, 
         margin=dict(t=50, b=150),
         updatemenus=[{
             "buttons": [
@@ -484,9 +485,10 @@ def Analytics_Dashboard(request):
     fig2.update_layout(
         title_x=0.5, 
         xaxis_tickangle=-45, 
-        autosize=False, 
-        width=1000, 
-        height=600, 
+        autosize=True,
+        # autosize=False, 
+        # width=1000, 
+        # height=600, 
         margin=dict(t=50, b=150)
     )
     if data.unique_posts.name.endswith(".csv"):
@@ -508,9 +510,10 @@ def Analytics_Dashboard(request):
     unique_post_fig.update_layout(
         title_x=0.5, 
         xaxis_tickangle=-45, 
-        autosize=False, 
-        width=1000, 
-        height=600, 
+        autosize=True,
+        # autosize=False, 
+        # width=1000, 
+        # height=600, 
         margin=dict(t=50, b=150)
     )
     if data.LDA_Topic.name.endswith(".csv"):
@@ -573,9 +576,11 @@ def Analytics_Dashboard(request):
     difficulty_of_topics.update_layout(
         title_x=0.5, 
         xaxis_tickangle=-45, 
-        autosize=False, 
-        width=1000, 
-        height=600, 
+        autosize=True,
+
+        # autosize=False, 
+        # width=1000, 
+        # height=600, 
         margin=dict(t=50, b=150)
     )
     if data.trends_of_topics.name.endswith(".csv"):
@@ -590,9 +595,10 @@ def Analytics_Dashboard(request):
     topic_trends_chart.update_layout(
         title_x=0.5, 
         xaxis_tickangle=-45, 
-        autosize=False, 
-        width=1000, 
-        height=600, 
+        autosize=True,
+        # autosize=False, 
+        # width=1000, 
+        # height=600, 
         margin=dict(t=50, b=150))
     if data.question_analysis_with_percentages.name.endswith(".csv"):
             df = pd.read_csv(data.question_analysis_with_percentages)
@@ -612,10 +618,12 @@ def Analytics_Dashboard(request):
     question_persentage.update_layout(
         xaxis_title="Generated Topic",
         yaxis_title="Percentage of Questions (%)",
-        xaxis_tickangle=45,  # Rotate x-axis labels for better readability
-        autosize=False, 
-        width=1000, 
-        height=600, 
+        xaxis_tickangle=45,
+        autosize=True,
+  # Rotate x-axis labels for better readability
+        # autosize=False, 
+        # width=1000, 
+        # height=600, 
         margin=dict(t=50, b=150)
     )
     data_list_for_questions= df.to_dict(orient="records")
@@ -626,13 +634,13 @@ def Analytics_Dashboard(request):
     page_number_for_questions  = request.GET.get("page")
     page_obj_for_questions  = paginator_for_question_persentage.get_page(page_number_for_questions)
 
-    significance_chart = fig1.to_html(full_html=False)
-    relevance_chart = fig2.to_html(full_html=False)
-    unique_post_chart=unique_post_fig.to_html(full_html=False)
-    papularity_chart=papularity.to_html(full_html=False)
-    difficulty_chart=difficulty_of_topics.to_html(full_html=False)
-    topic_trends_chart_html= topic_trends_chart.to_html(full_html=False)
-    question_persentage_chart=question_persentage.to_html(full_html=False)
+    significance_chart = fig1.to_html(full_html=False , config={"responsive": True})
+    relevance_chart = fig2.to_html(full_html=False , config={"responsive": True})
+    unique_post_chart=unique_post_fig.to_html(full_html=False , config={"responsive": True})
+    papularity_chart=papularity.to_html(full_html=False , config={"responsive": True})
+    difficulty_chart=difficulty_of_topics.to_html(full_html=False , config={"responsive": True})
+    topic_trends_chart_html= topic_trends_chart.to_html(full_html=False , config={"responsive": True})
+    question_persentage_chart=question_persentage.to_html(full_html=False , config={"responsive": True})
    
 
     return render(request, "AnalyticalDashboard.html", {"significance_chart": significance_chart, "relevance_chart": relevance_chart,"data_page": data_page,"unique_post_chart":unique_post_chart,"page_obj":page_obj,"papularity_chart":papularity_chart,"page_obj_for_papularity":page_obj_for_papularity,"page_obj_for_difficulty": page_obj_for_difficulty,"difficulty_of_topics":difficulty_chart,"topic_trends_chart_html":topic_trends_chart_html,"question_persentage_chart":question_persentage_chart,"page_obj_for_questions":page_obj_for_questions })
